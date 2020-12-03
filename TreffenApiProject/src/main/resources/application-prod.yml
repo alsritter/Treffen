@@ -1,0 +1,6 @@
+springfox:
+  documentation:
+    enabled: false
+
+knife4j:
+  enable: true # 停用Swagger文档
