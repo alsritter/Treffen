@@ -1,18 +1,22 @@
 package com.alsritter.treffen.controller;
 
+import com.alsritter.treffen.common.BizException;
+import com.alsritter.treffen.common.ConstantKit;
+import com.alsritter.treffen.common.ServiceErrorResultEnum;
 import com.google.code.kaptcha.Producer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.TimeUnit;
@@ -21,22 +25,21 @@ import java.util.concurrent.TimeUnit;
  * @author alsritter
  * @version 1.0
  **/
-@Api(tags = "登录验证")
+@Api(tags = "一些通用的工具接口")
 @Slf4j
 @RestController
-public class ImageCodeController {
+@RequestMapping("/utils")
+public class UtilsController {
+
     @Autowired
-    public void setCaptchaProducer(Producer captchaProducer) {
-        this.captchaProducer = captchaProducer;
-    }
     private Producer captchaProducer;
 
-    @Resource
-    StringRedisTemplate stringTemplate;
+    @Autowired
+    public StringRedisTemplate stringTemplate;
 
-    @ApiOperation(value = "生成验证码图片")
+    @ApiOperation(value = "生成验证码图片", notes = "返回一张图片")
     @GetMapping("/imagecode")
-    public void getImageCode(HttpServletRequest request, HttpServletResponse response, String uuid) {
+    public void getImageCode(HttpServletResponse response, @RequestParam @ApiParam(value = "生成验证码的唯一标识符") String uuid) {
         //禁止缓存
         response.setDateHeader("Expires", 0);
         response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
@@ -61,7 +64,7 @@ public class ImageCodeController {
             out.flush();
         } catch (Exception e) {
             log.warn(e.getMessage());
-            throw new BizException(CommonEnum.INTERNAL_SERVER_ERROR.getResultCode(), "验证码生成错误");
+            throw new BizException(ServiceErrorResultEnum.VERIFY_CODE_CREATE_ERROR);
         }
     }
 }

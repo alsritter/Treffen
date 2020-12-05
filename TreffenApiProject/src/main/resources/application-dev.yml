@@ -1,0 +1,13 @@
+# 配置日志级别
+logging:
+  level:
+    org:
+      springframework: warn
+    com:
+      alsritter: debug
+  file:
+    path: "./logs"
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger : %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger : %msg%n"
+
