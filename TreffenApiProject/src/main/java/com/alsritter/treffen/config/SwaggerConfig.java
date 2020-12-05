@@ -37,6 +37,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo(){
         Contact contact = new Contact("alsritter", "个人链接：https://alsritter.icu/", "alsritter1@gmail.com");
+
         return new ApiInfo(
                 "Treffen API Documents", // 标题
                 "Treffen 后端提供的 API 文档", // 描述

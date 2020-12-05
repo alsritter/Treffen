@@ -12,14 +12,17 @@ package com.alsritter.treffen.common;
  * 503：Service Unavailable 由于超载或系统维护，服务器暂时的无法处理客户端的请求。延时的长度可包含在服务器的 Retry-After 头信息中
  */
 public enum ServiceErrorResultEnum {
-    BAD_REQUEST(400,"请求的数据格式不符!"),
+    PARAMETER_ERROR(400,"请求的数据格式不符!"),
+    PARAMETER_NOT_READABLE(500,"请求的数据不可读"),
+    REQUEST_METHOD_NOT_EXIST(404,"请求类型不符合!"),
     SAME_LOGIN_NAME_EXIST(400,"用户名已存在!"),
     UNAUTHORIZED(401,"请求的数字签名不匹配!"),
     LOGIN_NAME_NULL(400,"请输入登录名！"),
     LOGIN_NAME_IS_NOT_PHONE(400,"请输入正确的手机号！"),
     LOGIN_PASSWORD_NULL(400,"请输入密码！"),
-    LOGIN_VERIFY_CODE_NULL(400,"请输入验证码！"),
-    LOGIN_VERIFY_CODE_ERROR(401,"验证码错误！"),
+    VERIFY_CODE_NULL(400,"请输入验证码！"),
+    VERIFY_CODE_TIMEOUT_OR_NOT_EXIST(400,"验证码不存在或超时！"),
+    VERIFY_CODE_ERROR(401,"验证码错误！"),
     FORBIDDEN(403,"被禁止访问!"),
     NOT_ENOUGH_PERMISSIONS(403, "权限不足!"),
     NOT_FOUND(404, "请求的资源不存在!"),

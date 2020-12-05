@@ -44,12 +44,12 @@ public final class SecurityConstants {
     };
 
     // 登录接口 WHITELIST
-    public static final String LOGIN_WHITELIST = "/api/auth/login";
+    public static final String AUTH_LOGIN_URL = "/api/auth/login";
 
     /**
      * 白名单，里面的请求直接放行
      */
-    public static final String[] WHITE_LIST = {
+    public static final String[] GLOBAL_WHITE_LIST = {
       "/api/utils/**"
     };
 

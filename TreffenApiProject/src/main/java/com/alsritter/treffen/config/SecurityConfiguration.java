@@ -58,10 +58,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // 放行 swagger 文档
                 .antMatchers(SecurityConstants.SWAGGER_WHITELIST).permitAll()
-                // 放行登录接口
-                .antMatchers(HttpMethod.POST, SecurityConstants.LOGIN_WHITELIST).permitAll()
+                // 放行登录接口（直接在这个 Controller 里面处理登陆，无需那么复杂配置 UsernamePasswordAuthenticationFilter 来登陆）
+                .antMatchers(HttpMethod.POST, SecurityConstants.AUTH_LOGIN_URL).permitAll()
                 // 设置白名单
-                .antMatchers(SecurityConstants.WHITE_LIST).permitAll()
+                .antMatchers(SecurityConstants.GLOBAL_WHITE_LIST).permitAll()
                 // 指定路径下的资源需要验证了的用户才能访问
                 .antMatchers(SecurityConstants.FILTER_ALL).authenticated()
                 // 所有的删除操作必须是管理员才行
@@ -69,12 +69,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // 其他都放行了
                 .anyRequest().permitAll()
                 .and()
-                //添加自定义 Filter
+                //添加自定义 Filter（这个只用来处理是否携带 Token，以及 Token 是否正确）
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), stringRedisTemplate))
-                // 不需要session（不创建会话）
+                // 不需要session（不创建会话，即不采用默认的 Session-Cookie 登陆策略）
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                // 授权异常处理，因为使用的是自定义的登陆方式，所以需要自定义 403 处理
+                // 授权异常处理时会进入这个 authenticationEntryPoint
                 .exceptionHandling().authenticationEntryPoint(new JwtAuthenticationEntryPoint())
+                // 因为使用的是自定义的登陆方式，所以需要自定义 403 处理
                 .accessDeniedHandler(new JwtAccessDeniedHandler());
         // 防止 H2 web 页面的 Frame 被拦截
         http.headers().frameOptions().disable();

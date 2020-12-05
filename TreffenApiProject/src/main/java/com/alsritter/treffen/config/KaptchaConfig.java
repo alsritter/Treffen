@@ -1,5 +1,7 @@
 package com.alsritter.treffen.config;
 
+import com.alsritter.treffen.common.DisKaptchaCssImpl;
+import com.alsritter.treffen.common.NoKaptchaBackground;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
 import org.springframework.context.annotation.Bean;
@@ -71,9 +73,9 @@ public class KaptchaConfig {
 
         // 这里添加自定义的样式
         //自定义验证码样式
-        properties.setProperty("kaptcha.obscurificator.impl","com.alsritter.model.DisKaptchaCssImpl");
+        properties.setProperty("kaptcha.obscurificator.impl", DisKaptchaCssImpl.class.getName());
         //自定义验证码背景
-        properties.setProperty("kaptcha.background.impl","com.alsritter.model.NoKaptchaBackhround");
+        properties.setProperty("kaptcha.background.impl", NoKaptchaBackground.class.getName());
         Config config=new Config(properties);
         defaultKaptcha.setConfig(config);
         return defaultKaptcha;

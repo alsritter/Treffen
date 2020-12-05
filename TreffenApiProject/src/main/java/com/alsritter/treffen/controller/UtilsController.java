@@ -7,6 +7,8 @@ import com.google.code.kaptcha.Producer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -25,18 +27,18 @@ import java.util.concurrent.TimeUnit;
  * @author alsritter
  * @version 1.0
  **/
-@Api(tags = "一些通用的工具接口")
+@Api(tags = "不需要认证的接口")
 @Slf4j
 @RestController
 @RequestMapping("/utils")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UtilsController {
 
-    @Autowired
-    private Producer captchaProducer;
+    private final Producer captchaProducer;
 
-    @Autowired
-    public StringRedisTemplate stringTemplate;
+    private final StringRedisTemplate stringTemplate;
 
+    @ApiResponse(description = "返回一张验证码图片")
     @ApiOperation(value = "生成验证码图片", notes = "返回一张图片")
     @GetMapping("/imagecode")
     public void getImageCode(HttpServletResponse response, @RequestParam @ApiParam(value = "生成验证码的唯一标识符") String uuid) {
