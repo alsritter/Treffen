@@ -1,15 +1,15 @@
-package com.alsritter.treffen.dao;
+package com.alsritter.treffen.mapper;
 
 import com.alsritter.treffen.entity.TbMenuItemGroup;
 
-public interface TbMenuItemGroupDao {
-    int deleteByPrimaryKey(Integer deptId);
+public interface TbMenuItemGroupMapper {
+    int deleteByPrimaryKey(Integer groupId);
 
     int insert(TbMenuItemGroup record);
 
     int insertSelective(TbMenuItemGroup record);
 
-    TbMenuItemGroup selectByPrimaryKey(Integer deptId);
+    TbMenuItemGroup selectByPrimaryKey(Integer groupId);
 
     int updateByPrimaryKeySelective(TbMenuItemGroup record);
 

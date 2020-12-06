@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alsritter.treffen.mapper.TbMenuItemGroupMapper">
+  <resultMap id="BaseResultMap" type="com.alsritter.treffen.entity.TbMenuItemGroup">
+    <id column="group_id" jdbcType="INTEGER" property="groupId" />
+    <result column="group_name" jdbcType="VARCHAR" property="groupName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    group_id, group_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_menu_item_group
+    where group_id = #{groupId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_menu_item_group
+    where group_id = #{groupId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="group_id" keyProperty="groupId" parameterType="com.alsritter.treffen.entity.TbMenuItemGroup" useGeneratedKeys="true">
+    insert into tb_menu_item_group (group_name)
+    values (#{groupName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="group_id" keyProperty="groupId" parameterType="com.alsritter.treffen.entity.TbMenuItemGroup" useGeneratedKeys="true">
+    insert into tb_menu_item_group
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="groupName != null">
+        group_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="groupName != null">
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.alsritter.treffen.entity.TbMenuItemGroup">
+    update tb_menu_item_group
+    <set>
+      <if test="groupName != null">
+        group_name = #{groupName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where group_id = #{groupId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.alsritter.treffen.entity.TbMenuItemGroup">
+    update tb_menu_item_group
+    set group_name = #{groupName,jdbcType=VARCHAR}
+    where group_id = #{groupId,jdbcType=INTEGER}
+  </update>
+</mapper>

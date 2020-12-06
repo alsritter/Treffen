@@ -1,5 +1,6 @@
 package com.alsritter.treffen.common.util;
 
+import com.alsritter.treffen.entity.TbUser;
 import com.alsritter.treffen.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class CurrentUserUtils {
 
     private final UserService userService;
 
-    public User getCurrentUser() {
+    public TbUser getCurrentUser() {
         return userService.find(getCurrentUserName());
     }
 
@@ -29,6 +30,7 @@ public class CurrentUserUtils {
         if (authentication != null && authentication.getPrincipal() != null) {
             return (String) authentication.getPrincipal();
         }
+
         return null;
     }
 }

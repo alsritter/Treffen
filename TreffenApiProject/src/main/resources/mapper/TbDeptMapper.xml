@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.alsritter.treffen.dao.TbMeetingAttendeeListDao">
-  <resultMap id="BaseResultMap" type="com.alsritter.treffen.entity.TbMeetingAttendeeList">
+<mapper namespace="com.alsritter.treffen.mapper.TbDeptMapper">
+  <resultMap id="BaseResultMap" type="com.alsritter.treffen.entity.TbDept">
     <id column="dept_id" jdbcType="INTEGER" property="deptId" />
     <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
     <result column="dept_desc" jdbcType="VARCHAR" property="deptDesc" />
@@ -21,18 +21,15 @@
     delete from tb_dept
     where dept_id = #{deptId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.alsritter.treffen.entity.TbMeetingAttendeeList">
-    insert into tb_dept (dept_id, dept_name, dept_desc, 
-      dept_location, is_deleted)
-    values (#{deptId,jdbcType=INTEGER}, #{deptName,jdbcType=VARCHAR}, #{deptDesc,jdbcType=VARCHAR}, 
-      #{deptLocation,jdbcType=VARCHAR}, #{isDeleted,jdbcType=TINYINT})
+  <insert id="insert" keyColumn="dept_id" keyProperty="deptId" parameterType="com.alsritter.treffen.entity.TbDept" useGeneratedKeys="true">
+    insert into tb_dept (dept_name, dept_desc, dept_location, 
+      is_deleted)
+    values (#{deptName,jdbcType=VARCHAR}, #{deptDesc,jdbcType=VARCHAR}, #{deptLocation,jdbcType=VARCHAR}, 
+      #{isDeleted,jdbcType=TINYINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.alsritter.treffen.entity.TbMeetingAttendeeList">
+  <insert id="insertSelective" keyColumn="dept_id" keyProperty="deptId" parameterType="com.alsritter.treffen.entity.TbDept" useGeneratedKeys="true">
     insert into tb_dept
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="deptId != null">
-        dept_id,
-      </if>
       <if test="deptName != null">
         dept_name,
       </if>
@@ -47,9 +44,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="deptId != null">
-        #{deptId,jdbcType=INTEGER},
-      </if>
       <if test="deptName != null">
         #{deptName,jdbcType=VARCHAR},
       </if>
@@ -64,7 +58,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.alsritter.treffen.entity.TbMeetingAttendeeList">
+  <update id="updateByPrimaryKeySelective" parameterType="com.alsritter.treffen.entity.TbDept">
     update tb_dept
     <set>
       <if test="deptName != null">
@@ -82,7 +76,7 @@
     </set>
     where dept_id = #{deptId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.alsritter.treffen.entity.TbMeetingAttendeeList">
+  <update id="updateByPrimaryKey" parameterType="com.alsritter.treffen.entity.TbDept">
     update tb_dept
     set dept_name = #{deptName,jdbcType=VARCHAR},
       dept_desc = #{deptDesc,jdbcType=VARCHAR},

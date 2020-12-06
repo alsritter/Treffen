@@ -1,13 +1,15 @@
-package com.alsritter.treffen.dao;
+package com.alsritter.treffen.mapper;
 
 import com.alsritter.treffen.entity.TbUser;
 
-public interface TbUserDao {
-    int deleteByPrimaryKey(Integer userId);
+public interface TbUserMapper {
+    int deleteByPrimaryKey(Long userId);
 
     int insert(TbUser record);
 
     int insertSelective(TbUser record);
+
+    TbUser selectByUserNameTbUser(String username);
 
     TbUser selectByPrimaryKey(Integer userId);
 

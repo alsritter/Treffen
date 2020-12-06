@@ -1,15 +1,15 @@
-package com.alsritter.treffen.dao;
+package com.alsritter.treffen.mapper;
 
 import com.alsritter.treffen.entity.TbTasks;
 
-public interface TbTasksDao {
-    int deleteByPrimaryKey(Integer deptId);
+public interface TbTasksMapper {
+    int deleteByPrimaryKey(Integer taskId);
 
     int insert(TbTasks record);
 
     int insertSelective(TbTasks record);
 
-    TbTasks selectByPrimaryKey(Integer deptId);
+    TbTasks selectByPrimaryKey(Integer taskId);
 
     int updateByPrimaryKeySelective(TbTasks record);
 

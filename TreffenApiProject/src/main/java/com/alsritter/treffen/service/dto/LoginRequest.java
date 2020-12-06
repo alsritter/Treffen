@@ -1,4 +1,4 @@
-package com.alsritter.treffen.controller.dto;
+package com.alsritter.treffen.service.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

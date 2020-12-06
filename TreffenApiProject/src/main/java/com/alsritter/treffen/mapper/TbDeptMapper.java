@@ -1,8 +1,8 @@
-package com.alsritter.treffen.dao;
+package com.alsritter.treffen.mapper;
 
 import com.alsritter.treffen.entity.TbDept;
 
-public interface TbDeptDao {
+public interface TbDeptMapper {
     int deleteByPrimaryKey(Integer deptId);
 
     int insert(TbDept record);

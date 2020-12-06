@@ -4,17 +4,14 @@ import java.io.Serializable;
 import lombok.Data;
 
 /**
- * tb_menu_item_group
+ * tb_user_role_list
  * @author 
  */
 @Data
-public class TbMenuItemGroup implements Serializable {
-    private Integer groupId;
+public class UserRoleKey implements Serializable {
+    private Long userId;
 
-    /**
-     * 分组的名称
-     */
-    private String groupName;
+    private Long roleId;
 
     private static final long serialVersionUID = 1L;
 
@@ -29,17 +26,17 @@ public class TbMenuItemGroup implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        TbMenuItemGroup other = (TbMenuItemGroup) that;
-        return (this.getGroupId() == null ? other.getGroupId() == null : this.getGroupId().equals(other.getGroupId()))
-            && (this.getGroupName() == null ? other.getGroupName() == null : this.getGroupName().equals(other.getGroupName()));
+        UserRoleKey other = (UserRoleKey) that;
+        return (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
+            && (this.getRoleId() == null ? other.getRoleId() == null : this.getRoleId().equals(other.getRoleId()));
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getGroupId() == null) ? 0 : getGroupId().hashCode());
-        result = prime * result + ((getGroupName() == null) ? 0 : getGroupName().hashCode());
+        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
+        result = prime * result + ((getRoleId() == null) ? 0 : getRoleId().hashCode());
         return result;
     }
 
@@ -49,8 +46,8 @@ public class TbMenuItemGroup implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", groupId=").append(groupId);
-        sb.append(", groupName=").append(groupName);
+        sb.append(", userId=").append(userId);
+        sb.append(", roleId=").append(roleId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -4,7 +4,7 @@ import com.alsritter.treffen.common.exception.*;
 import com.alsritter.treffen.common.ConstantKit;
 import com.alsritter.treffen.common.SecurityConstants;
 import com.alsritter.treffen.common.ServiceErrorResultEnum;
-import com.alsritter.treffen.controller.dto.LoginRequest;
+import com.alsritter.treffen.service.dto.LoginRequest;
 import com.alsritter.treffen.service.AuthService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

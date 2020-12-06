@@ -4,32 +4,31 @@ import java.io.Serializable;
 import lombok.Data;
 
 /**
- * tb_dept
- * @author alsritter
+ * tb_menu_item
+ * @author 
  */
 @Data
 public class TbMenuItem implements Serializable {
-    /**
-     * 部门编号
-     */
-    private Integer deptId;
+    private Integer itemId;
 
     /**
-     * 部门名称（索引）
+     * 菜单每项的名称
      */
-    private String deptName;
-
-    /**
-     * 部门描述
-     */
-    private String deptDesc;
-
-    /**
-     * 部门位置
-     */
-    private String deptLocation;
+    private String itemName;
 
     private Byte isDeleted;
+
+    /**
+     * 菜单功能描述
+     */
+    private String itemDesc;
+
+    private String itemPath;
+
+    /**
+     * 设置分组，标识当前这个 item 属于哪个分组下面的
+     */
+    private Integer itemGroup;
 
     private static final long serialVersionUID = 1L;
 
@@ -45,22 +44,24 @@ public class TbMenuItem implements Serializable {
             return false;
         }
         TbMenuItem other = (TbMenuItem) that;
-        return (this.getDeptId() == null ? other.getDeptId() == null : this.getDeptId().equals(other.getDeptId()))
-            && (this.getDeptName() == null ? other.getDeptName() == null : this.getDeptName().equals(other.getDeptName()))
-            && (this.getDeptDesc() == null ? other.getDeptDesc() == null : this.getDeptDesc().equals(other.getDeptDesc()))
-            && (this.getDeptLocation() == null ? other.getDeptLocation() == null : this.getDeptLocation().equals(other.getDeptLocation()))
-            && (this.getIsDeleted() == null ? other.getIsDeleted() == null : this.getIsDeleted().equals(other.getIsDeleted()));
+        return (this.getItemId() == null ? other.getItemId() == null : this.getItemId().equals(other.getItemId()))
+            && (this.getItemName() == null ? other.getItemName() == null : this.getItemName().equals(other.getItemName()))
+            && (this.getIsDeleted() == null ? other.getIsDeleted() == null : this.getIsDeleted().equals(other.getIsDeleted()))
+            && (this.getItemDesc() == null ? other.getItemDesc() == null : this.getItemDesc().equals(other.getItemDesc()))
+            && (this.getItemPath() == null ? other.getItemPath() == null : this.getItemPath().equals(other.getItemPath()))
+            && (this.getItemGroup() == null ? other.getItemGroup() == null : this.getItemGroup().equals(other.getItemGroup()));
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getDeptId() == null) ? 0 : getDeptId().hashCode());
-        result = prime * result + ((getDeptName() == null) ? 0 : getDeptName().hashCode());
-        result = prime * result + ((getDeptDesc() == null) ? 0 : getDeptDesc().hashCode());
-        result = prime * result + ((getDeptLocation() == null) ? 0 : getDeptLocation().hashCode());
+        result = prime * result + ((getItemId() == null) ? 0 : getItemId().hashCode());
+        result = prime * result + ((getItemName() == null) ? 0 : getItemName().hashCode());
         result = prime * result + ((getIsDeleted() == null) ? 0 : getIsDeleted().hashCode());
+        result = prime * result + ((getItemDesc() == null) ? 0 : getItemDesc().hashCode());
+        result = prime * result + ((getItemPath() == null) ? 0 : getItemPath().hashCode());
+        result = prime * result + ((getItemGroup() == null) ? 0 : getItemGroup().hashCode());
         return result;
     }
 
@@ -70,11 +71,12 @@ public class TbMenuItem implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", deptId=").append(deptId);
-        sb.append(", deptName=").append(deptName);
-        sb.append(", deptDesc=").append(deptDesc);
-        sb.append(", deptLocation=").append(deptLocation);
+        sb.append(", itemId=").append(itemId);
+        sb.append(", itemName=").append(itemName);
         sb.append(", isDeleted=").append(isDeleted);
+        sb.append(", itemDesc=").append(itemDesc);
+        sb.append(", itemPath=").append(itemPath);
+        sb.append(", itemGroup=").append(itemGroup);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

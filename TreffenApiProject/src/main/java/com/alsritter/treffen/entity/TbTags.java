@@ -1,35 +1,27 @@
 package com.alsritter.treffen.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import lombok.Data;
 
 /**
- * tb_dept
- * @author alsritter
+ * tb_tags
+ * @author 
  */
 @Data
 public class TbTags implements Serializable {
-    /**
-     * 部门编号
-     */
-    private Integer deptId;
+    private Integer tagId;
 
     /**
-     * 部门名称（索引）
+     * 创建时间
      */
-    private String deptName;
+    private Date tagCreateTime;
 
-    /**
-     * 部门描述
-     */
-    private String deptDesc;
+    private String tagDesc;
 
-    /**
-     * 部门位置
-     */
-    private String deptLocation;
+    private Integer isDeleted;
 
-    private Byte isDeleted;
+    private Integer userId;
 
     private static final long serialVersionUID = 1L;
 
@@ -45,22 +37,22 @@ public class TbTags implements Serializable {
             return false;
         }
         TbTags other = (TbTags) that;
-        return (this.getDeptId() == null ? other.getDeptId() == null : this.getDeptId().equals(other.getDeptId()))
-            && (this.getDeptName() == null ? other.getDeptName() == null : this.getDeptName().equals(other.getDeptName()))
-            && (this.getDeptDesc() == null ? other.getDeptDesc() == null : this.getDeptDesc().equals(other.getDeptDesc()))
-            && (this.getDeptLocation() == null ? other.getDeptLocation() == null : this.getDeptLocation().equals(other.getDeptLocation()))
-            && (this.getIsDeleted() == null ? other.getIsDeleted() == null : this.getIsDeleted().equals(other.getIsDeleted()));
+        return (this.getTagId() == null ? other.getTagId() == null : this.getTagId().equals(other.getTagId()))
+            && (this.getTagCreateTime() == null ? other.getTagCreateTime() == null : this.getTagCreateTime().equals(other.getTagCreateTime()))
+            && (this.getTagDesc() == null ? other.getTagDesc() == null : this.getTagDesc().equals(other.getTagDesc()))
+            && (this.getIsDeleted() == null ? other.getIsDeleted() == null : this.getIsDeleted().equals(other.getIsDeleted()))
+            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()));
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getDeptId() == null) ? 0 : getDeptId().hashCode());
-        result = prime * result + ((getDeptName() == null) ? 0 : getDeptName().hashCode());
-        result = prime * result + ((getDeptDesc() == null) ? 0 : getDeptDesc().hashCode());
-        result = prime * result + ((getDeptLocation() == null) ? 0 : getDeptLocation().hashCode());
+        result = prime * result + ((getTagId() == null) ? 0 : getTagId().hashCode());
+        result = prime * result + ((getTagCreateTime() == null) ? 0 : getTagCreateTime().hashCode());
+        result = prime * result + ((getTagDesc() == null) ? 0 : getTagDesc().hashCode());
         result = prime * result + ((getIsDeleted() == null) ? 0 : getIsDeleted().hashCode());
+        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
         return result;
     }
 
@@ -70,11 +62,11 @@ public class TbTags implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", deptId=").append(deptId);
-        sb.append(", deptName=").append(deptName);
-        sb.append(", deptDesc=").append(deptDesc);
-        sb.append(", deptLocation=").append(deptLocation);
+        sb.append(", tagId=").append(tagId);
+        sb.append(", tagCreateTime=").append(tagCreateTime);
+        sb.append(", tagDesc=").append(tagDesc);
         sb.append(", isDeleted=").append(isDeleted);
+        sb.append(", userId=").append(userId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

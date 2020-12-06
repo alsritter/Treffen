@@ -1,37 +1,36 @@
 package com.alsritter.treffen.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
 
 /**
- * tb_dept
- * @author alsritter
+ * tb_roles
+ * @author 
  */
 @Data
-public class TbRoles implements Serializable {
-    /**
-     * 部门编号
-     */
-    private Integer deptId;
+public class TbRoles implements GrantedAuthority {
+    private Integer roleId;
 
     /**
-     * 部门名称（索引）
+     * 权限名称
      */
-    private String deptName;
+    private String roleName;
 
-    /**
-     * 部门描述
-     */
-    private String deptDesc;
-
-    /**
-     * 部门位置
-     */
-    private String deptLocation;
+    private String roleDesc;
 
     private Byte isDeleted;
 
+    private Date createTime;
+
     private static final long serialVersionUID = 1L;
+
+
+    @Override
+    public String getAuthority() {
+        return this.roleName;
+    }
 
     @Override
     public boolean equals(Object that) {
@@ -45,22 +44,22 @@ public class TbRoles implements Serializable {
             return false;
         }
         TbRoles other = (TbRoles) that;
-        return (this.getDeptId() == null ? other.getDeptId() == null : this.getDeptId().equals(other.getDeptId()))
-            && (this.getDeptName() == null ? other.getDeptName() == null : this.getDeptName().equals(other.getDeptName()))
-            && (this.getDeptDesc() == null ? other.getDeptDesc() == null : this.getDeptDesc().equals(other.getDeptDesc()))
-            && (this.getDeptLocation() == null ? other.getDeptLocation() == null : this.getDeptLocation().equals(other.getDeptLocation()))
-            && (this.getIsDeleted() == null ? other.getIsDeleted() == null : this.getIsDeleted().equals(other.getIsDeleted()));
+        return (this.getRoleId() == null ? other.getRoleId() == null : this.getRoleId().equals(other.getRoleId()))
+            && (this.getRoleName() == null ? other.getRoleName() == null : this.getRoleName().equals(other.getRoleName()))
+            && (this.getRoleDesc() == null ? other.getRoleDesc() == null : this.getRoleDesc().equals(other.getRoleDesc()))
+            && (this.getIsDeleted() == null ? other.getIsDeleted() == null : this.getIsDeleted().equals(other.getIsDeleted()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()));
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getDeptId() == null) ? 0 : getDeptId().hashCode());
-        result = prime * result + ((getDeptName() == null) ? 0 : getDeptName().hashCode());
-        result = prime * result + ((getDeptDesc() == null) ? 0 : getDeptDesc().hashCode());
-        result = prime * result + ((getDeptLocation() == null) ? 0 : getDeptLocation().hashCode());
+        result = prime * result + ((getRoleId() == null) ? 0 : getRoleId().hashCode());
+        result = prime * result + ((getRoleName() == null) ? 0 : getRoleName().hashCode());
+        result = prime * result + ((getRoleDesc() == null) ? 0 : getRoleDesc().hashCode());
         result = prime * result + ((getIsDeleted() == null) ? 0 : getIsDeleted().hashCode());
+        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         return result;
     }
 
@@ -70,13 +69,14 @@ public class TbRoles implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", deptId=").append(deptId);
-        sb.append(", deptName=").append(deptName);
-        sb.append(", deptDesc=").append(deptDesc);
-        sb.append(", deptLocation=").append(deptLocation);
+        sb.append(", roleId=").append(roleId);
+        sb.append(", roleName=").append(roleName);
+        sb.append(", roleDesc=").append(roleDesc);
         sb.append(", isDeleted=").append(isDeleted);
+        sb.append(", createTime=").append(createTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
     }
+
 }

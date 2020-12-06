@@ -50,7 +50,7 @@ public final class SecurityConstants {
      * 白名单，里面的请求直接放行
      */
     public static final String[] GLOBAL_WHITE_LIST = {
-      "/api/utils/**"
+      "/api/utils/imagecode"
     };
 
     // 过滤ALL

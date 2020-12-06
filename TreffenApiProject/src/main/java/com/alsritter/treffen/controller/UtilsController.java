@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
  * @author alsritter
  * @version 1.0
  **/
-@Api(tags = "不需要认证的接口")
+@Api(tags = "常用的工具接口")
 @Slf4j
 @RestController
 @RequestMapping("/utils")
@@ -38,7 +38,7 @@ public class UtilsController {
 
     private final StringRedisTemplate stringTemplate;
 
-    @ApiResponse(description = "返回一张验证码图片")
+    @ApiResponse(description = "返回一张验证码图片，这个接口无需权限")
     @ApiOperation(value = "生成验证码图片", notes = "返回一张图片")
     @GetMapping("/imagecode")
     public void getImageCode(HttpServletResponse response, @RequestParam @ApiParam(value = "生成验证码的唯一标识符") String uuid) {

@@ -1,15 +1,15 @@
-package com.alsritter.treffen.dao;
+package com.alsritter.treffen.mapper;
 
 import com.alsritter.treffen.entity.TbTags;
 
-public interface TbTagsDao {
-    int deleteByPrimaryKey(Integer deptId);
+public interface TbTagsMapper {
+    int deleteByPrimaryKey(Integer tagId);
 
     int insert(TbTags record);
 
     int insertSelective(TbTags record);
 
-    TbTags selectByPrimaryKey(Integer deptId);
+    TbTags selectByPrimaryKey(Integer tagId);
 
     int updateByPrimaryKeySelective(TbTags record);
 

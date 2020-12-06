@@ -1,35 +1,28 @@
 package com.alsritter.treffen.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import lombok.Data;
 
 /**
- * tb_dept
- * @author alsritter
+ * tb_meeting
+ * @author 
  */
 @Data
 public class TbMeeting implements Serializable {
-    /**
-     * 部门编号
-     */
-    private Integer deptId;
+    private Integer meetingId;
 
-    /**
-     * 部门名称（索引）
-     */
-    private String deptName;
+    private Integer hostId;
 
-    /**
-     * 部门描述
-     */
-    private String deptDesc;
+    private Date startTime;
 
-    /**
-     * 部门位置
-     */
-    private String deptLocation;
+    private Date endTime;
 
-    private Byte isDeleted;
+    private String recordDesc;
+
+    private String recordType;
+
+    private Integer isDeleted;
 
     private static final long serialVersionUID = 1L;
 
@@ -45,10 +38,12 @@ public class TbMeeting implements Serializable {
             return false;
         }
         TbMeeting other = (TbMeeting) that;
-        return (this.getDeptId() == null ? other.getDeptId() == null : this.getDeptId().equals(other.getDeptId()))
-            && (this.getDeptName() == null ? other.getDeptName() == null : this.getDeptName().equals(other.getDeptName()))
-            && (this.getDeptDesc() == null ? other.getDeptDesc() == null : this.getDeptDesc().equals(other.getDeptDesc()))
-            && (this.getDeptLocation() == null ? other.getDeptLocation() == null : this.getDeptLocation().equals(other.getDeptLocation()))
+        return (this.getMeetingId() == null ? other.getMeetingId() == null : this.getMeetingId().equals(other.getMeetingId()))
+            && (this.getHostId() == null ? other.getHostId() == null : this.getHostId().equals(other.getHostId()))
+            && (this.getStartTime() == null ? other.getStartTime() == null : this.getStartTime().equals(other.getStartTime()))
+            && (this.getEndTime() == null ? other.getEndTime() == null : this.getEndTime().equals(other.getEndTime()))
+            && (this.getRecordDesc() == null ? other.getRecordDesc() == null : this.getRecordDesc().equals(other.getRecordDesc()))
+            && (this.getRecordType() == null ? other.getRecordType() == null : this.getRecordType().equals(other.getRecordType()))
             && (this.getIsDeleted() == null ? other.getIsDeleted() == null : this.getIsDeleted().equals(other.getIsDeleted()));
     }
 
@@ -56,10 +51,12 @@ public class TbMeeting implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getDeptId() == null) ? 0 : getDeptId().hashCode());
-        result = prime * result + ((getDeptName() == null) ? 0 : getDeptName().hashCode());
-        result = prime * result + ((getDeptDesc() == null) ? 0 : getDeptDesc().hashCode());
-        result = prime * result + ((getDeptLocation() == null) ? 0 : getDeptLocation().hashCode());
+        result = prime * result + ((getMeetingId() == null) ? 0 : getMeetingId().hashCode());
+        result = prime * result + ((getHostId() == null) ? 0 : getHostId().hashCode());
+        result = prime * result + ((getStartTime() == null) ? 0 : getStartTime().hashCode());
+        result = prime * result + ((getEndTime() == null) ? 0 : getEndTime().hashCode());
+        result = prime * result + ((getRecordDesc() == null) ? 0 : getRecordDesc().hashCode());
+        result = prime * result + ((getRecordType() == null) ? 0 : getRecordType().hashCode());
         result = prime * result + ((getIsDeleted() == null) ? 0 : getIsDeleted().hashCode());
         return result;
     }
@@ -70,10 +67,12 @@ public class TbMeeting implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", deptId=").append(deptId);
-        sb.append(", deptName=").append(deptName);
-        sb.append(", deptDesc=").append(deptDesc);
-        sb.append(", deptLocation=").append(deptLocation);
+        sb.append(", meetingId=").append(meetingId);
+        sb.append(", hostId=").append(hostId);
+        sb.append(", startTime=").append(startTime);
+        sb.append(", endTime=").append(endTime);
+        sb.append(", recordDesc=").append(recordDesc);
+        sb.append(", recordType=").append(recordType);
         sb.append(", isDeleted=").append(isDeleted);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

@@ -1,35 +1,45 @@
 package com.alsritter.treffen.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import lombok.Data;
 
 /**
- * tb_dept
- * @author alsritter
+ * tb_tasks
+ * @author 
  */
 @Data
 public class TbTasks implements Serializable {
-    /**
-     * 部门编号
-     */
-    private Integer deptId;
+    private Integer taskId;
 
     /**
-     * 部门名称（索引）
+     * 任务描述
      */
-    private String deptName;
+    private String taskDesc;
 
     /**
-     * 部门描述
+     * 用来存储出席人物的 用户/部门，记录的是 用户/部门的数组，每个值使用;进行分隔
      */
-    private String deptDesc;
+    private String attendee;
 
     /**
-     * 部门位置
+     * 用来标识是否于部门有关：要考虑以下情况1. 接收人是一个用户2. 接收人是一个部门 3. 接收人是多个部门 4. 接收人是多个不同部门的人
      */
-    private String deptLocation;
+    private Integer isDept;
 
-    private Byte isDeleted;
+    private Date createTime;
+
+    /**
+     * 任务的进度，0 任务中 1 结束
+     */
+    private Integer isEnd;
+
+    /**
+     * 任务负责人
+     */
+    private Integer hostId;
+
+    private Integer isDeleted;
 
     private static final long serialVersionUID = 1L;
 
@@ -45,10 +55,13 @@ public class TbTasks implements Serializable {
             return false;
         }
         TbTasks other = (TbTasks) that;
-        return (this.getDeptId() == null ? other.getDeptId() == null : this.getDeptId().equals(other.getDeptId()))
-            && (this.getDeptName() == null ? other.getDeptName() == null : this.getDeptName().equals(other.getDeptName()))
-            && (this.getDeptDesc() == null ? other.getDeptDesc() == null : this.getDeptDesc().equals(other.getDeptDesc()))
-            && (this.getDeptLocation() == null ? other.getDeptLocation() == null : this.getDeptLocation().equals(other.getDeptLocation()))
+        return (this.getTaskId() == null ? other.getTaskId() == null : this.getTaskId().equals(other.getTaskId()))
+            && (this.getTaskDesc() == null ? other.getTaskDesc() == null : this.getTaskDesc().equals(other.getTaskDesc()))
+            && (this.getAttendee() == null ? other.getAttendee() == null : this.getAttendee().equals(other.getAttendee()))
+            && (this.getIsDept() == null ? other.getIsDept() == null : this.getIsDept().equals(other.getIsDept()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
+            && (this.getIsEnd() == null ? other.getIsEnd() == null : this.getIsEnd().equals(other.getIsEnd()))
+            && (this.getHostId() == null ? other.getHostId() == null : this.getHostId().equals(other.getHostId()))
             && (this.getIsDeleted() == null ? other.getIsDeleted() == null : this.getIsDeleted().equals(other.getIsDeleted()));
     }
 
@@ -56,10 +69,13 @@ public class TbTasks implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getDeptId() == null) ? 0 : getDeptId().hashCode());
-        result = prime * result + ((getDeptName() == null) ? 0 : getDeptName().hashCode());
-        result = prime * result + ((getDeptDesc() == null) ? 0 : getDeptDesc().hashCode());
-        result = prime * result + ((getDeptLocation() == null) ? 0 : getDeptLocation().hashCode());
+        result = prime * result + ((getTaskId() == null) ? 0 : getTaskId().hashCode());
+        result = prime * result + ((getTaskDesc() == null) ? 0 : getTaskDesc().hashCode());
+        result = prime * result + ((getAttendee() == null) ? 0 : getAttendee().hashCode());
+        result = prime * result + ((getIsDept() == null) ? 0 : getIsDept().hashCode());
+        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
+        result = prime * result + ((getIsEnd() == null) ? 0 : getIsEnd().hashCode());
+        result = prime * result + ((getHostId() == null) ? 0 : getHostId().hashCode());
         result = prime * result + ((getIsDeleted() == null) ? 0 : getIsDeleted().hashCode());
         return result;
     }
@@ -70,10 +86,13 @@ public class TbTasks implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", deptId=").append(deptId);
-        sb.append(", deptName=").append(deptName);
-        sb.append(", deptDesc=").append(deptDesc);
-        sb.append(", deptLocation=").append(deptLocation);
+        sb.append(", taskId=").append(taskId);
+        sb.append(", taskDesc=").append(taskDesc);
+        sb.append(", attendee=").append(attendee);
+        sb.append(", isDept=").append(isDept);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", isEnd=").append(isEnd);
+        sb.append(", hostId=").append(hostId);
         sb.append(", isDeleted=").append(isDeleted);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
