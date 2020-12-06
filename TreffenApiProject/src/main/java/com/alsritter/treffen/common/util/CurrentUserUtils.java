@@ -1,6 +1,5 @@
 package com.alsritter.treffen.common.util;
 
-import com.alsritter.treffen.entity.User;
 import com.alsritter.treffen.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

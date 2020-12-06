@@ -41,7 +41,6 @@ public class AuthController {
         String verifyCode = loginRequest.getVerify();
         String uuid = loginRequest.getUuid();
         String previousVCode = stringTemplate.opsForValue().get(ConstantKit.IMAGE_CODE + uuid);
-        log.info("{} {} {}",uuid,verifyCode,loginRequest.getRememberMe());
 
         // 先验证这个 uuid 是否存在
         if (previousVCode == null) {

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alsritter.treffen.dao.TbMenuItemDao">
+  <resultMap id="BaseResultMap" type="com.alsritter.treffen.entity.TbMenuItem">
+    <id column="dept_id" jdbcType="INTEGER" property="deptId" />
+    <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
+    <result column="dept_desc" jdbcType="VARCHAR" property="deptDesc" />
+    <result column="dept_location" jdbcType="VARCHAR" property="deptLocation" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    dept_id, dept_name, dept_desc, dept_location, is_deleted
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_dept
+    where dept_id = #{deptId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_dept
+    where dept_id = #{deptId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.alsritter.treffen.entity.TbMenuItem">
+    insert into tb_dept (dept_id, dept_name, dept_desc, 
+      dept_location, is_deleted)
+    values (#{deptId,jdbcType=INTEGER}, #{deptName,jdbcType=VARCHAR}, #{deptDesc,jdbcType=VARCHAR}, 
+      #{deptLocation,jdbcType=VARCHAR}, #{isDeleted,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.alsritter.treffen.entity.TbMenuItem">
+    insert into tb_dept
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="deptId != null">
+        dept_id,
+      </if>
+      <if test="deptName != null">
+        dept_name,
+      </if>
+      <if test="deptDesc != null">
+        dept_desc,
+      </if>
+      <if test="deptLocation != null">
+        dept_location,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="deptId != null">
+        #{deptId,jdbcType=INTEGER},
+      </if>
+      <if test="deptName != null">
+        #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="deptDesc != null">
+        #{deptDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="deptLocation != null">
+        #{deptLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.alsritter.treffen.entity.TbMenuItem">
+    update tb_dept
+    <set>
+      <if test="deptName != null">
+        dept_name = #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="deptDesc != null">
+        dept_desc = #{deptDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="deptLocation != null">
+        dept_location = #{deptLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+    </set>
+    where dept_id = #{deptId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.alsritter.treffen.entity.TbMenuItem">
+    update tb_dept
+    set dept_name = #{deptName,jdbcType=VARCHAR},
+      dept_desc = #{deptDesc,jdbcType=VARCHAR},
+      dept_location = #{deptLocation,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=TINYINT}
+    where dept_id = #{deptId,jdbcType=INTEGER}
+  </update>
+</mapper>

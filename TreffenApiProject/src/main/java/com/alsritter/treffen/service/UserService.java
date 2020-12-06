@@ -1,8 +1,8 @@
 package com.alsritter.treffen.service;
 
-import com.alsritter.treffen.entity.User;
+import com.alsritter.treffen.entity.TbUser;
 
 public interface UserService {
-    User find(String userName);
-    boolean check(User user);
+    TbUser find(String userName);
+    boolean check(TbUser user);
 }
