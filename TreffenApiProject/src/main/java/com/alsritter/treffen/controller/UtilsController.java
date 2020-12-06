@@ -1,6 +1,6 @@
 package com.alsritter.treffen.controller;
 
-import com.alsritter.treffen.common.BizException;
+import com.alsritter.treffen.common.exception.MyErrorException;
 import com.alsritter.treffen.common.ConstantKit;
 import com.alsritter.treffen.common.ServiceErrorResultEnum;
 import com.google.code.kaptcha.Producer;
@@ -66,7 +66,7 @@ public class UtilsController {
             out.flush();
         } catch (Exception e) {
             log.warn(e.getMessage());
-            throw new BizException(ServiceErrorResultEnum.VERIFY_CODE_CREATE_ERROR);
+            throw new MyErrorException(ServiceErrorResultEnum.VERIFY_CODE_CREATE_ERROR);
         }
     }
 }

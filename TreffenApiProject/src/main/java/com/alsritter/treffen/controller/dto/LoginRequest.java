@@ -1,4 +1,4 @@
-package com.alsritter.treffen.controller.vo;
+package com.alsritter.treffen.controller.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -14,6 +14,12 @@ import java.io.Serializable;
  **/
 @Data
 public class LoginRequest implements Serializable {
+    @NotEmpty(message = "验证码不能为空")
+    @ApiModelProperty(value = "验证码", required = true)
+    private String verify;
+    @NotEmpty(message = "唯一标识码不能为空")
+    @ApiModelProperty(value = "唯一标识码", required = true)
+    private String uuid;
     @NotEmpty(message = "登录名不能为空")
     @ApiModelProperty(value = "登录名", required = true)
     private String username;

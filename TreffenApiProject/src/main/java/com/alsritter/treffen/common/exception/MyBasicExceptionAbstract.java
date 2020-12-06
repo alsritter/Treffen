@@ -1,17 +1,13 @@
-package com.alsritter.treffen.common;
+package com.alsritter.treffen.common.exception;
+
+import com.alsritter.treffen.common.ServiceErrorResultEnum;
 
 /**
- * @author alsritter
- * @version 1.0
- **/
-/**
- * 自定义一个异常类，用于处理发生的业务异常
- *
- * @author alsritter
- * @version 1.0
- **/
-public class BizException extends RuntimeException {
-
+ * 自定义一个基本异常类，用于处理发生的业务异常
+ * 因为可能有不同级别的报错，所以把异常类抽象处理对应创建就行了
+ * 把这个类定为抽象类也是为了防止实例化
+ */
+public abstract class MyBasicExceptionAbstract extends RuntimeException  {
     /**
      * 错误码
      */
@@ -22,25 +18,25 @@ public class BizException extends RuntimeException {
     protected final String errorMsg;
 
 
-    public BizException(ServiceErrorResultEnum serviceErrorResultEnum) {
+    public MyBasicExceptionAbstract(ServiceErrorResultEnum serviceErrorResultEnum) {
         super(serviceErrorResultEnum.getResultMsg());
         this.errorCode = serviceErrorResultEnum.getResultCode();
         this.errorMsg = serviceErrorResultEnum.getResultMsg();
     }
 
-    public BizException(ServiceErrorResultEnum serviceErrorResultEnum, Throwable cause) {
+    public MyBasicExceptionAbstract(ServiceErrorResultEnum serviceErrorResultEnum, Throwable cause) {
         super(serviceErrorResultEnum.getResultMsg(), cause);
         this.errorCode = serviceErrorResultEnum.getResultCode();
         this.errorMsg = serviceErrorResultEnum.getResultMsg();
     }
 
-    public BizException(Integer errorCode, String errorMsg) {
+    public MyBasicExceptionAbstract(Integer errorCode, String errorMsg) {
         super(errorMsg);
         this.errorCode = errorCode;
         this.errorMsg = errorMsg;
     }
 
-    public BizException(Integer errorCode, String errorMsg, Throwable cause) {
+    public MyBasicExceptionAbstract(Integer errorCode, String errorMsg, Throwable cause) {
         super(errorMsg, cause);
         this.errorCode = errorCode;
         this.errorMsg = errorMsg;
@@ -63,5 +59,4 @@ public class BizException extends RuntimeException {
     public synchronized Throwable fillInStackTrace() {
         return this;
     }
-
 }

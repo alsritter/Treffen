@@ -1,0 +1,14 @@
+version: '3'
+services:
+    my_redis:
+        container_name: my_redis
+        image: redis:4.0.14
+        environment:
+            - TZ=Asia/Shanghai
+        ports:
+            - "6379:6379"
+        volumes:
+            - ./config/redis/redis.conf:/usr/local/etc/redis/redis.conf
+            - ./data/redis/:/data/
+            - ./log/redis/:/var/log/redis/
+        command: redis-server /usr/local/etc/redis/redis.conf

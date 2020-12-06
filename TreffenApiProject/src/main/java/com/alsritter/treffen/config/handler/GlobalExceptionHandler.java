@@ -1,7 +1,7 @@
 package com.alsritter.treffen.config.handler;
 
-import com.alsritter.treffen.common.BizException;
 import com.alsritter.treffen.common.ServiceErrorResultEnum;
+import com.alsritter.treffen.common.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.bind.BindException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -26,11 +26,22 @@ public class GlobalExceptionHandler {
     /**
      * 处理自定义的业务异常
      *
-     * @param e Spring 会捕获 BizException 异常传入这个方法里
+     * @param e Spring 会捕获异常传入这个方法里
      */
-    @ExceptionHandler(value = BizException.class)
-    public void bizExceptionHandler(HttpServletResponse response, BizException e) throws IOException {
+    @ExceptionHandler(value = MyErrorException.class)
+    public void bizExceptionHandler(HttpServletResponse response, MyErrorException e) throws IOException {
         log.error("发生业务异常！原因是：{}", e.getErrorMsg());
+        response.sendError(e.getErrorCode(), e.getMessage());
+    }
+
+    /**
+     * 处理自定义的业务异常
+     *
+     * @param e Spring 会捕获异常传入这个方法里
+     */
+    @ExceptionHandler(value = MyWarnException.class)
+    public void bizExceptionHandler(HttpServletResponse response, MyWarnException e) throws IOException {
+        log.warn("发生业务异常！原因是：{}", e.getErrorMsg());
         response.sendError(e.getErrorCode(), e.getMessage());
     }
 
