@@ -5,83 +5,10 @@
     <id column="tag_id" jdbcType="INTEGER" property="tagId" />
     <result column="tag_create_time" jdbcType="TIMESTAMP" property="tagCreateTime" />
     <result column="tag_desc" jdbcType="VARCHAR" property="tagDesc" />
-    <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
   </resultMap>
   <sql id="Base_Column_List">
     tag_id, tag_create_time, tag_desc, is_deleted, user_id
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from tb_tags
-    where tag_id = #{tagId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from tb_tags
-    where tag_id = #{tagId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" keyColumn="tag_id" keyProperty="tagId" parameterType="com.alsritter.treffen.entity.TbTags" useGeneratedKeys="true">
-    insert into tb_tags (tag_create_time, tag_desc, is_deleted, 
-      user_id)
-    values (#{tagCreateTime,jdbcType=TIMESTAMP}, #{tagDesc,jdbcType=VARCHAR}, #{isDeleted,jdbcType=INTEGER}, 
-      #{userId,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" keyColumn="tag_id" keyProperty="tagId" parameterType="com.alsritter.treffen.entity.TbTags" useGeneratedKeys="true">
-    insert into tb_tags
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="tagCreateTime != null">
-        tag_create_time,
-      </if>
-      <if test="tagDesc != null">
-        tag_desc,
-      </if>
-      <if test="isDeleted != null">
-        is_deleted,
-      </if>
-      <if test="userId != null">
-        user_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="tagCreateTime != null">
-        #{tagCreateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="tagDesc != null">
-        #{tagDesc,jdbcType=VARCHAR},
-      </if>
-      <if test="isDeleted != null">
-        #{isDeleted,jdbcType=INTEGER},
-      </if>
-      <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.alsritter.treffen.entity.TbTags">
-    update tb_tags
-    <set>
-      <if test="tagCreateTime != null">
-        tag_create_time = #{tagCreateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="tagDesc != null">
-        tag_desc = #{tagDesc,jdbcType=VARCHAR},
-      </if>
-      <if test="isDeleted != null">
-        is_deleted = #{isDeleted,jdbcType=INTEGER},
-      </if>
-      <if test="userId != null">
-        user_id = #{userId,jdbcType=INTEGER},
-      </if>
-    </set>
-    where tag_id = #{tagId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.alsritter.treffen.entity.TbTags">
-    update tb_tags
-    set tag_create_time = #{tagCreateTime,jdbcType=TIMESTAMP},
-      tag_desc = #{tagDesc,jdbcType=VARCHAR},
-      is_deleted = #{isDeleted,jdbcType=INTEGER},
-      user_id = #{userId,jdbcType=INTEGER}
-    where tag_id = #{tagId,jdbcType=INTEGER}
-  </update>
 </mapper>

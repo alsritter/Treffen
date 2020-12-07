@@ -1,5 +1,7 @@
 package com.alsritter.treffen.controller;
 
+import com.alsritter.treffen.common.util.ResultGeneratorUtils;
+import com.alsritter.treffen.controller.vo.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +25,9 @@ public class TempController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @ApiOperation("说你好，需要 ADMIN 权限")
     @GetMapping("/hello")
-    public ResponseEntity<String> sayHello() {
+    public ResponseEntity<Result<String>> sayHello() {
         return ResponseEntity
                 .ok()
-                .body("你好，你能看到这条内容表示权限系统差不多了");
+                .body(ResultGeneratorUtils.genSuccessResult("你好，你能看到这条内容表示权限系统差不多了"));
     }
 }

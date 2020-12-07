@@ -1,6 +1,8 @@
 package com.alsritter.treffen.entity;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 
 /**
@@ -16,6 +18,7 @@ public class TbMenuItem implements Serializable {
      */
     private String itemName;
 
+    @TableLogic
     private Byte isDeleted;
 
     /**

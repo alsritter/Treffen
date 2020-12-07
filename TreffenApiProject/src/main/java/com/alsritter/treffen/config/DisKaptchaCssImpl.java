@@ -1,4 +1,4 @@
-package com.alsritter.treffen.common;
+package com.alsritter.treffen.config;
 
 import com.google.code.kaptcha.GimpyEngine;
 import com.google.code.kaptcha.NoiseProducer;

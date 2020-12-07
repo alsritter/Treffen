@@ -42,6 +42,14 @@ public abstract class MyBasicExceptionAbstract extends RuntimeException  {
         this.errorMsg = errorMsg;
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "\"errorCode\":" + "\"" + errorCode + "\"" +
+                ", \"errorMsg\":" + "\"" + errorMsg + "\"" +
+                '}';
+    }
+
     public Integer getErrorCode() {
         return errorCode;
     }

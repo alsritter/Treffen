@@ -1,18 +1,18 @@
 package com.alsritter.treffen.entity;
 
-import java.io.Serializable;
-import java.util.Date;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.util.Date;
+
 /**
- * tb_roles
- * @author 
+ * tb_roles 角色表
+ *
+ * @author alsritter
  */
 @Data
 public class TbRoles implements GrantedAuthority {
     private Integer roleId;
-
     /**
      * 权限名称
      */
@@ -44,10 +44,10 @@ public class TbRoles implements GrantedAuthority {
         }
         TbRoles other = (TbRoles) that;
         return (this.getRoleId() == null ? other.getRoleId() == null : this.getRoleId().equals(other.getRoleId()))
-            && (this.getRoleName() == null ? other.getRoleName() == null : this.getRoleName().equals(other.getRoleName()))
-            && (this.getRoleDesc() == null ? other.getRoleDesc() == null : this.getRoleDesc().equals(other.getRoleDesc()))
-            && (this.getIsDeleted() == null ? other.getIsDeleted() == null : this.getIsDeleted().equals(other.getIsDeleted()))
-            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()));
+                && (this.getRoleName() == null ? other.getRoleName() == null : this.getRoleName().equals(other.getRoleName()))
+                && (this.getRoleDesc() == null ? other.getRoleDesc() == null : this.getRoleDesc().equals(other.getRoleDesc()))
+                && (this.getIsDeleted() == null ? other.getIsDeleted() == null : this.getIsDeleted().equals(other.getIsDeleted()))
+                && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()));
     }
 
     @Override

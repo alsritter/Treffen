@@ -1,7 +1,7 @@
 package com.alsritter.treffen.controller;
 
+import com.alsritter.treffen.common.SecurityConstants;
 import com.alsritter.treffen.common.exception.MyErrorException;
-import com.alsritter.treffen.common.ConstantKit;
 import com.alsritter.treffen.common.ServiceErrorResultEnum;
 import com.google.code.kaptcha.Producer;
 import io.swagger.annotations.Api;
@@ -54,9 +54,9 @@ public class UtilsController {
         //为验证码创建一个文本
         String codeText = captchaProducer.createText();
         //将验证码存到redis
-        stringTemplate.opsForValue().set(ConstantKit.IMAGE_CODE + uuid, codeText);
+        stringTemplate.opsForValue().set(SecurityConstants.IMAGE_CODE + uuid, codeText);
         //设置验证码 5 分钟后到期
-        stringTemplate.expire(ConstantKit.IMAGE_CODE + uuid, ConstantKit.IMAGE_CODE_EXPIRE_TIME, TimeUnit.SECONDS);
+        stringTemplate.expire(SecurityConstants.IMAGE_CODE + uuid, SecurityConstants.IMAGE_CODE_EXPIRE_TIME, TimeUnit.SECONDS);
 
         try (ServletOutputStream out = response.getOutputStream()) {
             // 用创建的验证码文本生成图片

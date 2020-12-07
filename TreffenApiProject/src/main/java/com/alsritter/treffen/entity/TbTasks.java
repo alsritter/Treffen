@@ -2,6 +2,8 @@ package com.alsritter.treffen.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 
 /**
@@ -10,6 +12,9 @@ import lombok.Data;
  */
 @Data
 public class TbTasks implements Serializable {
+
+    // TODO: 子任务树型结构（组织模式）
+
     private Integer taskId;
 
     /**
@@ -39,7 +44,8 @@ public class TbTasks implements Serializable {
      */
     private Integer hostId;
 
-    private Integer isDeleted;
+    @TableLogic
+    private Byte isDeleted;
 
     private static final long serialVersionUID = 1L;
 

@@ -1,7 +1,5 @@
 package com.alsritter.treffen.config;
 
-import com.alsritter.treffen.common.DisKaptchaCssImpl;
-import com.alsritter.treffen.common.NoKaptchaBackground;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
 import org.springframework.context.annotation.Bean;

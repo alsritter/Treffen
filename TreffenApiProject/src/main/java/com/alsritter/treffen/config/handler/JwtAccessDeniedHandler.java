@@ -1,6 +1,8 @@
 package com.alsritter.treffen.config.handler;
 
 import com.alsritter.treffen.common.ServiceErrorResultEnum;
+import com.alsritter.treffen.controller.vo.Result;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -27,13 +29,18 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
      */
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
-        // TODO: 自定义一套响应内容
         PrintWriter out = null;
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(Result.<String>builder()
+                .code(ServiceErrorResultEnum.NOT_ENOUGH_PERMISSIONS.getResultCode())
+                .message(ServiceErrorResultEnum.NOT_ENOUGH_PERMISSIONS.getResultMsg())
+                .build());
+
         try {
             response.setStatus(ServiceErrorResultEnum.NOT_ENOUGH_PERMISSIONS.getResultCode());
             response.setContentType("application/json;charset=utf-8");
             out = response.getWriter();
-            out.println(ServiceErrorResultEnum.NOT_ENOUGH_PERMISSIONS);
+            out.println(json);
         } finally {
             if (null != out) {
                 out.flush();

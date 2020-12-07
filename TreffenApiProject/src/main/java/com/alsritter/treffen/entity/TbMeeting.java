@@ -2,6 +2,8 @@ package com.alsritter.treffen.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 
 /**
@@ -22,7 +24,8 @@ public class TbMeeting implements Serializable {
 
     private String recordType;
 
-    private Integer isDeleted;
+    @TableLogic
+    private Byte isDeleted;
 
     private static final long serialVersionUID = 1L;
 

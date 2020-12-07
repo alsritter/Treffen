@@ -9,6 +9,17 @@ package com.alsritter.treffen.common;
 public final class SecurityConstants {
 
     /**
+     * 设置验证码到期时间为 5 分钟
+     */
+    public static final Integer IMAGE_CODE_EXPIRE_TIME = 5 * 60;
+
+    /**
+     * 验证码的 Key，加上这个可方便和其它 key 产生冲突
+     */
+    public static final String IMAGE_CODE = "IMAGE_CODE";
+
+
+    /**
      * 角色的 key
      **/
     public static final String ROLE_CLAIMS = "rol";

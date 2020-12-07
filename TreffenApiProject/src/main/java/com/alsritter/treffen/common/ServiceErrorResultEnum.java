@@ -57,12 +57,4 @@ public enum ServiceErrorResultEnum {
     public String getResultMsg() {
         return resultMsg;
     }
-
-    @Override
-    public String toString() {
-        return "{" +
-                "\"resultCode\":" + "\"" + resultCode + "\"" +
-                ", \"resultMsg\":" + "\"" + resultMsg + "\"" +
-                '}';
-    }
 }

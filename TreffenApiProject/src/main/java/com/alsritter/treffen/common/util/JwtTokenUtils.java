@@ -23,9 +23,9 @@ import java.util.stream.Collectors;
  * @version 1.0
  **/
 @Slf4j
-public class JwtTokenUtils {
+public final class JwtTokenUtils {
 
-
+    private JwtTokenUtils(){}
 
     /**
      * 生成足够的安全随机密钥，以适合符合规范的签名

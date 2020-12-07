@@ -1,19 +1,8 @@
 package com.alsritter.treffen.mapper;
 
 import com.alsritter.treffen.entity.TbUser;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-public interface TbUserMapper {
-    int deleteByPrimaryKey(Long userId);
-
-    int insert(TbUser record);
-
-    int insertSelective(TbUser record);
-
+public interface TbUserMapper extends BaseMapper<TbUser> {
     TbUser selectByUserNameTbUser(String username);
-
-    TbUser selectByPrimaryKey(Integer userId);
-
-    int updateByPrimaryKeySelective(TbUser record);
-
-    int updateByPrimaryKey(TbUser record);
 }

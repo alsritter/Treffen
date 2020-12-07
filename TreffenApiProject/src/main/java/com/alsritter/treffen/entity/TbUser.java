@@ -2,6 +2,8 @@ package com.alsritter.treffen.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 
 /**
@@ -88,8 +90,9 @@ public class TbUser implements Serializable {
     private Date lastTime;
 
     /**
-     * 1 表示删除了，0 表示未删除
+     * 1 表示删除了，0 表示未删除，启用逻辑删除
      */
+    @TableLogic
     private Byte isDeleted;
 
     /**

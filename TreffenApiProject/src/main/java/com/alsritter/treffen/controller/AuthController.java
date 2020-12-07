@@ -1,7 +1,6 @@
 package com.alsritter.treffen.controller;
 
 import com.alsritter.treffen.common.exception.*;
-import com.alsritter.treffen.common.ConstantKit;
 import com.alsritter.treffen.common.SecurityConstants;
 import com.alsritter.treffen.common.ServiceErrorResultEnum;
 import com.alsritter.treffen.service.dto.LoginRequest;
@@ -40,7 +39,7 @@ public class AuthController {
     public ResponseEntity<Void> login(@ApiParam("登陆的参数") @RequestBody LoginRequest loginRequest) {
         String verifyCode = loginRequest.getVerify();
         String uuid = loginRequest.getUuid();
-        String previousVCode = stringTemplate.opsForValue().get(ConstantKit.IMAGE_CODE + uuid);
+        String previousVCode = stringTemplate.opsForValue().get(SecurityConstants.IMAGE_CODE + uuid);
 
         // 先验证这个 uuid 是否存在
         if (previousVCode == null) {
