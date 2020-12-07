@@ -5,6 +5,8 @@ import com.alsritter.treffen.common.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.bind.BindException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -45,6 +47,7 @@ public class GlobalExceptionHandler {
         response.sendError(e.getErrorCode(), e.getMessage());
     }
 
+
     /**
      * 处理空指针的异常
      *
@@ -53,7 +56,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = NullPointerException.class)
     public void exceptionHandler(HttpServletResponse response, NullPointerException e) throws IOException {
         log.error("发生空指针异常！原因是: ", e);
-        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+        response.sendError(
+                ServiceErrorResultEnum.INTERNAL_SERVER_ERROR.getResultCode(),
+                ServiceErrorResultEnum.INTERNAL_SERVER_ERROR.getResultMsg());
     }
 
     /**
@@ -61,7 +66,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
     public void exceptionHandler(HttpServletResponse response, HttpRequestMethodNotSupportedException e) throws IOException {
-        log.error("api 请求类型不符合 当前请求的方法是: {}", e.getMethod());
+        log.warn("api 请求类型不符合 当前请求的方法是: {}", e.getMethod());
 
         response.sendError(
                 ServiceErrorResultEnum.REQUEST_METHOD_NOT_EXIST.getResultCode(),
@@ -73,7 +78,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     public void exceptionHandler(HttpServletResponse response, HttpMessageNotReadableException e) throws IOException {
-        log.error("参数读取异常 HTTP 请求的是: {}", e.getHttpInputMessage());
+        log.warn("参数读取异常 HTTP 请求的是: {}", e.getHttpInputMessage());
         response.sendError(
                 ServiceErrorResultEnum.PARAMETER_NOT_READABLE.getResultCode(),
                 ServiceErrorResultEnum.PARAMETER_NOT_READABLE.getResultMsg());
@@ -107,7 +112,12 @@ public class GlobalExceptionHandler {
      * @param e Spring 会捕获 BizException 异常传入这个方法里
      */
     @ExceptionHandler(value = Exception.class)
-    public void exceptionHandler(HttpServletResponse response, Exception e) throws IOException {
+    public void exceptionHandler(HttpServletResponse response, Exception e) throws Exception {
+        if (e instanceof AccessDeniedException
+                || e instanceof AuthenticationException) {
+            throw e;
+        }
+
         log.error("未知异常！原因是:", e);
         response.sendError(
                 ServiceErrorResultEnum.INTERNAL_SERVER_ERROR.getResultCode(),

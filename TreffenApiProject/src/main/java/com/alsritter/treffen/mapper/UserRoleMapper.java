@@ -6,7 +6,9 @@ import com.alsritter.treffen.entity.UserRoleKey;
 import java.util.List;
 
 public interface UserRoleMapper {
-    List<TbRoles> selectByUserId(Integer userId);
+    List<UserRoleKey> selectByUserId(Integer userId);
+
+    List<TbRoles> selectByRoleIdList(List<UserRoleKey> roleIdList);
 
     int deleteByPrimaryKey(UserRoleKey key);
 

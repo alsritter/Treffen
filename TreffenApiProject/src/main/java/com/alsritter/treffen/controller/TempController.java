@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,7 +23,9 @@ public class TempController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @ApiOperation("说你好，需要 ADMIN 权限")
     @GetMapping("/hello")
-    public ResponseEntity<Void> sayHello() {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<String> sayHello() {
+        return ResponseEntity
+                .ok()
+                .body("你好，你能看到这条内容表示权限系统差不多了");
     }
 }

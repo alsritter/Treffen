@@ -1,23 +1,25 @@
 package com.alsritter.treffen.config.handler;
 
+import com.alsritter.treffen.common.ServiceErrorResultEnum;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
- * 用来解决匿名用户访问需要权限才能访问的资源时的异常
- *
- * AuthenticationEntryPoint 是 Spring Security Web一个概念模型接口，
- * 顾名思义，他所建模的概念是:“认证入口点” 它在用户请求处理过程中遇到认证异常时，
- * 被 ExceptionTranslationFilter 用于开启特定认证方案(authentication schema)的认证流程。
- *
+ * 用来解决匿名用户(就是未登录的)访问需要权限才能访问的资源时的异常
+ * 注意：
+ * AuthenticationEntryPoint 用来解决匿名用户访问无权限资源时的异常
+ * AccessDeniedHandler 用来解决认证过的用户访问无权限资源时的异常
  *
  * @author alsritter
  * @version 1.0
  **/
+@Slf4j
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     /**
@@ -33,6 +35,19 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request,
                          HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
+        log.warn(authException.getMessage());
+        PrintWriter out = null;
+
+        try {
+            response.setStatus(ServiceErrorResultEnum.NOT_ENOUGH_PERMISSIONS.getResultCode());
+            response.setContentType("application/json;charset=utf-8");
+            out = response.getWriter();
+            out.println(ServiceErrorResultEnum.NOT_ENOUGH_PERMISSIONS);
+        } finally {
+            if (null != out) {
+                out.flush();
+                out.close();
+            }
+        }
     }
 }

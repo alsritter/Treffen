@@ -24,6 +24,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 /**
  * 配置安全类
+ *
  * @author alsritter
  * @version 1.0
  **/
@@ -35,6 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     /**
      * 使用构造方法的形式自动注入 stringRedisTemplate
+     *
      * @param stringRedisTemplate 把 JWT 存储到 Redis 里面
      */
     public SecurityConfiguration(StringRedisTemplate stringRedisTemplate) {
@@ -58,7 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // 放行 swagger 文档
                 .antMatchers(SecurityConstants.SWAGGER_WHITELIST).permitAll()
-                // 放行登录接口（直接在这个 Controller 里面处理登陆，无需那么复杂配置 UsernamePasswordAuthenticationFilter 来登陆）
+                // 放行登录接口
                 .antMatchers(HttpMethod.POST, SecurityConstants.AUTH_LOGIN_URL).permitAll()
                 // 设置白名单
                 .antMatchers(SecurityConstants.GLOBAL_WHITE_LIST).permitAll()
@@ -66,15 +68,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(SecurityConstants.FILTER_ALL).authenticated()
                 // 所有的删除操作必须是管理员才行
                 .antMatchers(HttpMethod.DELETE, SecurityConstants.FILTER_ALL).hasRole("ADMIN")
-                // 其他都放行了
+                // 其它请求直接放行（通过 Spring EL 的注解在 Controller 上面写需要的权限，而非全部拦截）
                 .anyRequest().permitAll()
                 .and()
                 //添加自定义 Filter（这个只用来处理是否携带 Token，以及 Token 是否正确）
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), stringRedisTemplate))
                 // 不需要session（不创建会话，即不采用默认的 Session-Cookie 登陆策略）
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                // 授权异常处理时会进入这个 authenticationEntryPoint
-                .exceptionHandling().authenticationEntryPoint(new JwtAuthenticationEntryPoint())
+                // 异常处理
+                .exceptionHandling()
+                // AccessDeniedHandler 仅适用于经过身份验证的用户。未经身份验证的用户的默认行为是重定向到登录页面,
+                // 如果要更改此设置，则需要配置一个 AuthenticationEntryPoint
+                .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
                 // 因为使用的是自定义的登陆方式，所以需要自定义 403 处理
                 .accessDeniedHandler(new JwtAccessDeniedHandler());
         // 防止 H2 web 页面的 Frame 被拦截

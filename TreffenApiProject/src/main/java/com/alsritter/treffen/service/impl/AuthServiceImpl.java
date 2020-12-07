@@ -39,6 +39,7 @@ public class AuthServiceImpl implements AuthService {
         }
         // 取得该用户的权限
         List<TbRoles> permissionList = userRoleService.getPermissionList(user.getUserId());
+
         JwtUser jwtUser = new JwtUser(user, loginRequest.getRememberMe(), permissionList);
 
         // 获取权限列表
@@ -46,6 +47,7 @@ public class AuthServiceImpl implements AuthService {
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
+
 
         String token = JwtTokenUtils.createToken(user.getUserName(), user.getUserId().toString(), authorities, loginRequest.getRememberMe());
         // 存到 redis 里面先

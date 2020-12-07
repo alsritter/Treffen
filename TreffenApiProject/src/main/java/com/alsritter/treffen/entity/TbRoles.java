@@ -26,7 +26,6 @@ public class TbRoles implements GrantedAuthority {
 
     private static final long serialVersionUID = 1L;
 
-
     @Override
     public String getAuthority() {
         return this.roleName;

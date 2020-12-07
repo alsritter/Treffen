@@ -43,14 +43,16 @@ public final class SecurityConstants {
             "/webjars/**"
     };
 
-    // 登录接口 WHITELIST
-    public static final String AUTH_LOGIN_URL = "/api/auth/login";
+    /**
+     * 登录接口 WHITELIST 注意: 就算设置了 context-path 也不用加上 api
+     */
+    public static final String AUTH_LOGIN_URL = "/auth/login";
 
     /**
      * 白名单，里面的请求直接放行
      */
     public static final String[] GLOBAL_WHITE_LIST = {
-      "/api/utils/imagecode"
+      "/utils/imagecode"
     };
 
     // 过滤ALL

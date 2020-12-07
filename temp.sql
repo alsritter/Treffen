@@ -30,7 +30,7 @@ CREATE TABLE `tb_dept` (
   `is_deleted` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`dept_id`),
   UNIQUE KEY `tb_dept_dept_name_uindex` (`dept_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,6 +39,7 @@ CREATE TABLE `tb_dept` (
 
 LOCK TABLES `tb_dept` WRITE;
 /*!40000 ALTER TABLE `tb_dept` DISABLE KEYS */;
+INSERT INTO `tb_dept` VALUES (1,'无部门','用户的默认部门','',0);
 /*!40000 ALTER TABLE `tb_dept` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,12 +81,12 @@ DROP TABLE IF EXISTS `tb_meeting_attendee_list`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tb_meeting_attendee_list` (
-  `meeting_id` int(10) unsigned DEFAULT NULL,
-  `user_id` int(10) unsigned DEFAULT NULL,
-  KEY `tb_meeting_attendee_tb_meeting_meeting_id_fk` (`meeting_id`),
+  `meeting_id` int(10) unsigned NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`meeting_id`,`user_id`),
   KEY `tb_meeting_attendee_tb_user_user_id_fk` (`user_id`),
-  CONSTRAINT `tb_meeting_attendee_tb_meeting_meeting_id_fk` FOREIGN KEY (`meeting_id`) REFERENCES `tb_meeting` (`meeting_id`),
-  CONSTRAINT `tb_meeting_attendee_tb_user_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `tb_user` (`user_id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `tb_meeting_attendee_tb_meeting_meeting_id_fk` FOREIGN KEY (`meeting_id`) REFERENCES `tb_meeting` (`meeting_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `tb_meeting_attendee_tb_user_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `tb_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -153,28 +154,30 @@ LOCK TABLES `tb_menu_item_group` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `tb_menu_item_privileges`
+-- Table structure for table `tb_role_resource_list`
 --
 
-DROP TABLE IF EXISTS `tb_menu_item_privileges`;
+DROP TABLE IF EXISTS `tb_role_resource_list`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tb_menu_item_privileges` (
-  `role_id` int(10) unsigned DEFAULT NULL,
-  `item_id` int(10) unsigned DEFAULT NULL,
+CREATE TABLE `tb_role_resource_list` (
+  `role_id` int(10) unsigned NOT NULL,
+  `item_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`role_id`,`item_id`),
   KEY `tb_menu_item_privileges_role_id_item_id_index` (`role_id`,`item_id`),
-  CONSTRAINT `tb_menu_item_privileges_tb_menu_item_item_id_fk` FOREIGN KEY (`role_id`) REFERENCES `tb_menu_item` (`item_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `tb_menu_item_privileges_tb_roles_role_id_fk` FOREIGN KEY (`role_id`) REFERENCES `tb_roles` (`role_id`) ON DELETE SET NULL ON UPDATE CASCADE
+  KEY `tb_menu_item_privileges_tb_roles_role_id_fk` (`item_id`),
+  CONSTRAINT `tb_menu_item_privileges_tb_menu_item_item_id_fk` FOREIGN KEY (`role_id`) REFERENCES `tb_roles` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `tb_menu_item_privileges_tb_roles_role_id_fk` FOREIGN KEY (`item_id`) REFERENCES `tb_menu_item` (`item_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='角色权限能访问的item';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tb_menu_item_privileges`
+-- Dumping data for table `tb_role_resource_list`
 --
 
-LOCK TABLES `tb_menu_item_privileges` WRITE;
-/*!40000 ALTER TABLE `tb_menu_item_privileges` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tb_menu_item_privileges` ENABLE KEYS */;
+LOCK TABLES `tb_role_resource_list` WRITE;
+/*!40000 ALTER TABLE `tb_role_resource_list` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_role_resource_list` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -192,7 +195,7 @@ CREATE TABLE `tb_roles` (
   `create_time` datetime DEFAULT NULL,
   PRIMARY KEY (`role_id`),
   UNIQUE KEY `tb_roles_role_name_uindex` (`role_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='权限表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -201,6 +204,7 @@ CREATE TABLE `tb_roles` (
 
 LOCK TABLES `tb_roles` WRITE;
 /*!40000 ALTER TABLE `tb_roles` DISABLE KEYS */;
+INSERT INTO `tb_roles` VALUES (1,'ROLE_ADMIN','管理员',0,'2020-12-06 20:28:04'),(2,'ROLE_USER','普通用户',0,'2020-12-06 23:56:28');
 /*!40000 ALTER TABLE `tb_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -240,11 +244,12 @@ DROP TABLE IF EXISTS `tb_task_tag_list`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tb_task_tag_list` (
-  `task_id` int(10) unsigned DEFAULT NULL,
-  `tag_id` int(10) unsigned DEFAULT NULL,
-  KEY `tb_task_tag_list_tb_tasks_task_id_fk` (`task_id`),
-  CONSTRAINT `tb_task_tag_list_tb_tags_tag_id_fk` FOREIGN KEY (`task_id`) REFERENCES `tb_tags` (`tag_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `tb_task_tag_list_tb_tasks_task_id_fk` FOREIGN KEY (`task_id`) REFERENCES `tb_tasks` (`task_id`) ON DELETE SET NULL ON UPDATE CASCADE
+  `task_id` int(10) unsigned NOT NULL,
+  `tag_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`task_id`,`tag_id`),
+  KEY `tb_task_tag_list_tb_tags_tag_id_fk` (`tag_id`),
+  CONSTRAINT `tb_task_tag_list_tb_tags_tag_id_fk` FOREIGN KEY (`tag_id`) REFERENCES `tb_tags` (`tag_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `tb_task_tag_list_tb_tasks_task_id_fk` FOREIGN KEY (`task_id`) REFERENCES `tb_tasks` (`task_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -297,8 +302,8 @@ DROP TABLE IF EXISTS `tb_user`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tb_user` (
   `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '人员编号',
-  `emp_no` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '这个是登陆的用户ID，这里就是工号',
-  `user_password` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '这个是登陆的用户ID，这里就是工号',
+  `user_password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `mgr_id` int(10) unsigned DEFAULT NULL COMMENT '上级领导的编号',
   `true_name` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '真实名称',
   `sex` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0 男，1 女',
@@ -306,7 +311,6 @@ CREATE TABLE `tb_user` (
   `sal` decimal(10,0) NOT NULL DEFAULT '2000' COMMENT '工资',
   `comm` decimal(10,0) NOT NULL DEFAULT '0' COMMENT '提成，奖金之类的',
   `job` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '职位',
-  `role_id` int(10) unsigned DEFAULT NULL COMMENT '权限，-1 表示无权限',
   `birthday` date DEFAULT NULL COMMENT '生日',
   `phone` char(11) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '手机号',
   `photo` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '头像地址',
@@ -314,14 +318,12 @@ CREATE TABLE `tb_user` (
   `last_ip` varchar(16) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '最后的登陆ip',
   `last_time` datetime DEFAULT NULL COMMENT '最后登陆时间',
   `is_deleted` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '1 表示删除了，0 表示未删除',
-  `dept_id` int(10) unsigned DEFAULT '0' COMMENT '部门id（0 表示无部门）',
+  `dept_id` int(10) unsigned DEFAULT '1' COMMENT '部门id（0 表示无部门）',
   PRIMARY KEY (`user_id`),
-  UNIQUE KEY `user_emp_no_uindex` (`emp_no`),
+  UNIQUE KEY `user_emp_no_uindex` (`user_name`),
   KEY `tb_user_tb_dept_dept_id_fk` (`dept_id`),
-  KEY `tb_user_tb_roles_role_id_fk` (`role_id`),
-  CONSTRAINT `tb_user_tb_dept_dept_id_fk` FOREIGN KEY (`dept_id`) REFERENCES `tb_dept` (`dept_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `tb_user_tb_roles_role_id_fk` FOREIGN KEY (`role_id`) REFERENCES `tb_roles` (`role_id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `tb_user_tb_dept_dept_id_fk` FOREIGN KEY (`dept_id`) REFERENCES `tb_dept` (`dept_id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -330,7 +332,35 @@ CREATE TABLE `tb_user` (
 
 LOCK TABLES `tb_user` WRITE;
 /*!40000 ALTER TABLE `tb_user` DISABLE KEYS */;
+INSERT INTO `tb_user` VALUES (1,'2018250','$2a$10$2jUojQkN9IXmJ/oT1JDwFOfn/PgnRVZ9OmLT5bJE1b19i7w9vtNfa',NULL,'张三',0,'2020-12-06',2000,0,'管理员',NULL,'13128863336',NULL,NULL,NULL,NULL,0,1);
 /*!40000 ALTER TABLE `tb_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tb_user_role_list`
+--
+
+DROP TABLE IF EXISTS `tb_user_role_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_user_role_list` (
+  `user_id` int(10) unsigned NOT NULL,
+  `role_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`user_id`,`role_id`),
+  KEY `tb_user_role_list_tb_roles_role_id_fk` (`role_id`),
+  CONSTRAINT `tb_user_role_list_tb_roles_role_id_fk` FOREIGN KEY (`role_id`) REFERENCES `tb_roles` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `tb_user_role_list_tb_user_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `tb_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_user_role_list`
+--
+
+LOCK TABLES `tb_user_role_list` WRITE;
+/*!40000 ALTER TABLE `tb_user_role_list` DISABLE KEYS */;
+INSERT INTO `tb_user_role_list` VALUES (1,1),(1,2);
+/*!40000 ALTER TABLE `tb_user_role_list` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -342,4 +372,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-12-06 20:19:34
+-- Dump completed on 2020-12-07 15:17:33
