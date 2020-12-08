@@ -13,6 +13,7 @@ package com.alsritter.treffen.common;
  */
 public enum ServiceErrorResultEnum {
     PARAMETER_ERROR(400,"请求的数据格式不符!"),
+    MISSING_PARAMETER_ERROR(400,"丢失参数"),
     PARAMETER_NOT_READABLE(500,"请求的数据不可读"),
     REQUEST_METHOD_NOT_EXIST(404,"请求类型不符合!"),
     SAME_LOGIN_NAME_EXIST(400,"用户名已存在!"),

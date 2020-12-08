@@ -1,5 +1,7 @@
 package com.alsritter.treffen.service.impl;
 
+import com.alsritter.treffen.common.ServiceErrorResultEnum;
+import com.alsritter.treffen.common.exception.MyWarnException;
 import com.alsritter.treffen.common.util.CurrentUserUtils;
 import com.alsritter.treffen.common.util.JwtTokenUtils;
 import com.alsritter.treffen.entity.TbRoles;
@@ -12,7 +14,6 @@ import com.alsritter.treffen.service.dto.LoginRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
@@ -35,8 +36,9 @@ public class AuthServiceImpl implements AuthService {
     public String getToken(LoginRequest loginRequest) {
         TbUser user = userService.find(loginRequest.getUsername());
         if (!userService.check(loginRequest.getPassword(), user.getUserPassword())) {
-            throw new BadCredentialsException("The user name or password is not correct.");
+            throw new MyWarnException(ServiceErrorResultEnum.LOGIN_ERROR);
         }
+
         // 取得该用户的权限
         List<TbRoles> permissionList = userRoleService.getPermissionList(user.getUserId());
 

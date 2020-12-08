@@ -1,3 +1,6 @@
+/**
+ * 这里只是备份一下菜单的内容
+ */
 const menus = [
   {
     name: "个人中心",
@@ -143,8 +146,28 @@ const menus = [
   }
 ];
 
+import request from "@/common/utils/request"
 
+/**
+ * 取得菜单内容
+ */
+export default async function getHomeAsideMenu() {
+  // 因为存进去的是 json
+  let menus = localStorage.getItem("menus");
+  if(menus != null) {
+    return JSON.parse(menus);
+  }
+  
+  await request
+  .get("/api/menu/getMenu")
+  .then(res => {
+    console.log(res.data.data);
+    menus = res.data.data;
+    localStorage.setItem("menus", JSON.stringify(menus))
+  })
+  .catch(error => {
+      console.log(error);
+  });
 
-export default function getHomeAsideMenu() {
   return menus;
 }

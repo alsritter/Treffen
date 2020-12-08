@@ -72,7 +72,7 @@ public final class SecurityConstants {
     };
 
     // 过滤ALL
-    public static final String FILTER_ALL = "/api/**";
+    public static final String FILTER_ALL = "/**";
 
     private SecurityConstants() {
     }

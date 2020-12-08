@@ -15,9 +15,6 @@ import java.io.Serializable;
 @Data
 @TableName("tb_menu_item_group")
 public class TbMenuItemGroup implements Serializable {
-
-    // TODO: 为每个类都加上 MyBatisPlus 的标识注解
-
     @TableId(type = IdType.AUTO)
     private Integer groupId;
     /**

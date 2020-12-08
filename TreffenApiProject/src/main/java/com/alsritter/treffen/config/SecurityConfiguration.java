@@ -64,7 +64,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, SecurityConstants.AUTH_LOGIN_URL).permitAll()
                 // 设置白名单
                 .antMatchers(SecurityConstants.GLOBAL_WHITE_LIST).permitAll()
-                // 指定路径下的资源需要验证了的用户才能访问
+                // 指定路径下的资源需要验证了的用户才能访问（这里默认是 ALL）
                 .antMatchers(SecurityConstants.FILTER_ALL).authenticated()
                 // 所有的删除操作必须是管理员才行
                 .antMatchers(HttpMethod.DELETE, SecurityConstants.FILTER_ALL).hasRole("ADMIN")

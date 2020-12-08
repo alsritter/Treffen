@@ -11,6 +11,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -102,7 +103,21 @@ public class GlobalExceptionHandler {
                         .message(ServiceErrorResultEnum.PARAMETER_NOT_READABLE.getResultMsg())
                         .build()
         );
-    }
+    }// MissingServletRequestParameterException
+
+    /**
+     * 丢失参数异常
+     */
+    @ExceptionHandler(value = MissingServletRequestParameterException.class)
+    public ResponseEntity<Result<String>> exceptionHandler(HttpServletResponse response, MissingServletRequestParameterException e) throws IOException {
+        log.warn("丢失参数: {}", e.getParameterName());
+        return ResponseEntity.status(ServiceErrorResultEnum.MISSING_PARAMETER_ERROR.getResultCode()).body(
+                Result.<String>builder()
+                        .code(ServiceErrorResultEnum.MISSING_PARAMETER_ERROR.getResultCode())
+                        .message(ServiceErrorResultEnum.MISSING_PARAMETER_ERROR.getResultMsg())
+                        .build()
+        );
+    }// MissingServletRequestParameterException
 
     /**
      * 请求参数绑定到 java bean 上失败时抛出
