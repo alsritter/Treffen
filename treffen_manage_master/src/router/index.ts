@@ -1,18 +1,27 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import Home from '@/views/Home.vue';
 import Login from '@/views/Login.vue'
+import NotDefine from '@/views/NotDefine.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: Home,
+    children: [
+      {
+        path: "/:other",
+        name: "Other",
+        component: NotDefine
+      }
+    ]
   },
   {
     path: "/login",
     name: "Login",
     component: Login
-  },
+  }
+
   // {
   //   path: "/about",
   //   name: "About",

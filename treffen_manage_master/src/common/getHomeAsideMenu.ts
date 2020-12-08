@@ -155,7 +155,7 @@ export default async function getHomeAsideMenu() {
   // 因为存进去的是 json
   let menus = localStorage.getItem("menus");
   if(menus != null) {
-    return JSON.parse(menus);
+    return Promise.resolve(JSON.parse(menus));
   }
   
   await request
