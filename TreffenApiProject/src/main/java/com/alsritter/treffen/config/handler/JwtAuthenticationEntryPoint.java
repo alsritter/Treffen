@@ -37,18 +37,19 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request,
                          HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
+        // TODO: 前端拦截到 401 状态码要求用户登陆
         log.warn(authException.getMessage());
 
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(Result.<String>builder()
-                .code(ServiceErrorResultEnum.NOT_ENOUGH_PERMISSIONS.getResultCode())
-                .message(ServiceErrorResultEnum.NOT_ENOUGH_PERMISSIONS.getResultMsg())
+                .code(ServiceErrorResultEnum.NOT_LOGIN_ERROR.getResultCode())
+                .message(ServiceErrorResultEnum.NOT_LOGIN_ERROR.getResultMsg())
                 .build());
 
 
         PrintWriter out = null;
         try {
-            response.setStatus(ServiceErrorResultEnum.NOT_ENOUGH_PERMISSIONS.getResultCode());
+            response.setStatus(ServiceErrorResultEnum.NOT_LOGIN_ERROR.getResultCode());
             response.setContentType("application/json;charset=utf-8");
             out = response.getWriter();
             out.println(json);

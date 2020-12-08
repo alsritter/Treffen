@@ -9,6 +9,11 @@ package com.alsritter.treffen.common;
 public final class SecurityConstants {
 
     /**
+     * 全局标识管理员
+     */
+    public static final String ADMIN = "ROLE_ADMIN";
+
+    /**
      * 设置验证码到期时间为 5 分钟
      */
     public static final Integer IMAGE_CODE_EXPIRE_TIME = 5 * 60;

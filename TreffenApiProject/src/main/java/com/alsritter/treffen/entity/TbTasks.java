@@ -3,6 +3,8 @@ package com.alsritter.treffen.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 
@@ -15,6 +17,7 @@ public class TbTasks implements Serializable {
 
     // TODO: 子任务树型结构（组织模式）
 
+    @TableId(type = IdType.AUTO)
     private Integer taskId;
 
     /**

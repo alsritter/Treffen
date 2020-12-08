@@ -5,7 +5,7 @@ import lombok.Data;
 
 /**
  * tb_user_role_list
- * @author 
+ * @author alsritter
  */
 @Data
 public class UserRoleKey implements Serializable {

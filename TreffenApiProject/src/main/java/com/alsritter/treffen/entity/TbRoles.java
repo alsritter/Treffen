@@ -1,5 +1,7 @@
 package com.alsritter.treffen.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -12,6 +14,7 @@ import java.util.Date;
  */
 @Data
 public class TbRoles implements GrantedAuthority {
+    @TableId(type = IdType.AUTO)
     private Integer roleId;
     /**
      * 权限名称

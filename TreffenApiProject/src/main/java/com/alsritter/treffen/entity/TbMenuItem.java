@@ -2,6 +2,8 @@ package com.alsritter.treffen.entity;
 
 import java.io.Serializable;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 
@@ -11,6 +13,7 @@ import lombok.Data;
  */
 @Data
 public class TbMenuItem implements Serializable {
+    @TableId(type = IdType.AUTO)
     private Integer itemId;
 
     /**

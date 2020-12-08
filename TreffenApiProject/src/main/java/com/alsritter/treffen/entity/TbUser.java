@@ -3,6 +3,8 @@ package com.alsritter.treffen.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 
@@ -15,6 +17,7 @@ public class TbUser implements Serializable {
     /**
      * 人员编号
      */
+    @TableId(type = IdType.AUTO)
     private Integer userId;
 
     /**

@@ -8,8 +8,8 @@ const menus = [
         path: "currentTask"
       },
       {
-        name: "历史任务",
-        path: "historyTask"
+        name: "用户历史任务",
+        path: "userHistoryTask"
       },
       {
         name: "周报",
@@ -32,10 +32,6 @@ const menus = [
       {
         name: "录入职员",
         path: "addEmployee"
-      },
-      {
-        name: "删除职员",
-        path: "deleteEmployee"
       },
       {
         name: "修改职员信息",
@@ -83,7 +79,7 @@ const menus = [
       },
       {
         name: "历史任务",
-        path: "historyTask"
+        path: "allHistoryTask"
       }
     ]
   },
@@ -121,6 +117,28 @@ const menus = [
         name: "历史通知",
         path: "historyMessage"
       }
+    ]
+  },
+  {
+    name: "删除信息",
+    icon: "el-icon-delete-solid",
+    subMenus: [
+      {
+        name: "删除通知",
+        path: "deletedMessage"
+      },
+      {
+        name: "删除会议",
+        path: "deletedMeeting"
+      },
+      {
+        name: "删除任务",
+        path: "deletedTask"
+      },
+      {
+        name: "删除职员",
+        path: "deleteEmployee"
+      },
     ]
   }
 ];

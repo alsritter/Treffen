@@ -1,6 +1,9 @@
 package com.alsritter.treffen.entity;
 
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 /**
@@ -12,6 +15,7 @@ public class TbDept implements Serializable {
     /**
      * 部门编号
      */
+    @TableId(type = IdType.AUTO)
     private Integer deptId;
 
     /**

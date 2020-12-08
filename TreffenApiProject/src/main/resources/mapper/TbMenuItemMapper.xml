@@ -12,4 +12,23 @@
   <sql id="Base_Column_List">
     item_id, item_name, is_deleted, item_desc, item_path, item_group
   </sql>
+    <select id="getMenuItemByRoleId" resultType="com.alsritter.treffen.entity.TbMenuItem">
+      select *
+      from tb_menu_item
+      where item_id in (
+        select item_id
+        from tb_role_resource_list
+        where role_id = #{roleId}
+      )
+    </select>
+  <select id="getMenuItemByRoleName" resultType="com.alsritter.treffen.entity.TbMenuItem">
+    select *
+    from tb_menu_item
+    where item_id in (
+      select item_id
+      from tb_roles r
+             join tb_role_resource_list rr on r.role_id = rr.role_id
+      where role_name = #{roleName}
+    )
+  </select>
 </mapper>

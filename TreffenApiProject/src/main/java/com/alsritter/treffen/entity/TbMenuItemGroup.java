@@ -1,20 +1,34 @@
 package com.alsritter.treffen.entity;
 
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * tb_menu_item_group
- * @author 
+ *
+ * @author alsritter
  */
 @Data
+@TableName("tb_menu_item_group")
 public class TbMenuItemGroup implements Serializable {
-    private Integer groupId;
 
+    // TODO: 为每个类都加上 MyBatisPlus 的标识注解
+
+    @TableId(type = IdType.AUTO)
+    private Integer groupId;
     /**
      * 分组的名称
      */
     private String groupName;
+
+    /**
+     * 当前分组的图标
+     */
+    private String groupIcon;
 
     private static final long serialVersionUID = 1L;
 
@@ -31,7 +45,8 @@ public class TbMenuItemGroup implements Serializable {
         }
         TbMenuItemGroup other = (TbMenuItemGroup) that;
         return (this.getGroupId() == null ? other.getGroupId() == null : this.getGroupId().equals(other.getGroupId()))
-            && (this.getGroupName() == null ? other.getGroupName() == null : this.getGroupName().equals(other.getGroupName()));
+                && (this.getGroupIcon() == null ? other.getGroupIcon() == null : this.getGroupIcon().equals(other.getGroupIcon()))
+                && (this.getGroupName() == null ? other.getGroupName() == null : this.getGroupName().equals(other.getGroupName()));
     }
 
     @Override
@@ -40,6 +55,7 @@ public class TbMenuItemGroup implements Serializable {
         int result = 1;
         result = prime * result + ((getGroupId() == null) ? 0 : getGroupId().hashCode());
         result = prime * result + ((getGroupName() == null) ? 0 : getGroupName().hashCode());
+        result = prime * result + ((getGroupIcon() == null) ? 0 : getGroupIcon().hashCode());
         return result;
     }
 
@@ -51,6 +67,7 @@ public class TbMenuItemGroup implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", groupId=").append(groupId);
         sb.append(", groupName=").append(groupName);
+        sb.append(", groupIcon=").append(groupIcon);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

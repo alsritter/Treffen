@@ -6,6 +6,7 @@
         <id column="role_id" jdbcType="INTEGER" property="roleId"/>
     </resultMap>
 
+
     <sql id="Base_Column_List">
         role_id, role_name, role_desc, is_deleted, create_time
     </sql>
