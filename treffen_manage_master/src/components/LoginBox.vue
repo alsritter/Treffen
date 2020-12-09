@@ -6,10 +6,10 @@
             </div>
         </template>
         <el-form label-width="70px" :rules="rules" :model="state" ref="formRef">
-            <el-form-item label="用户名" prop="username">
+            <el-form-item label="编号" prop="username">
                 <el-input
                     v-model="state.username"
-                    placeholder="请输入用户名"
+                    placeholder="请输入员工编号"
                     :maxlength="15"
                 ></el-input>
             </el-form-item>
@@ -73,6 +73,7 @@ export default defineComponent({
         // 取得这个 ref 对象
         const formRef = ref<InstanceType<typeof ElForm>>();
 
+        // 登录框的规则
         const rules = {
             username: [
                 { required: true, message: "请输入用户名", trigger: "blur" },
@@ -91,7 +92,7 @@ export default defineComponent({
             ]
         };
 
-        // 先取得验证码
+        // 取得验证码
         const imageURL = ref("");
         const getImageCode = () => {
             const uuid: string = new String(new Date().getTime()).toString();
@@ -124,6 +125,7 @@ export default defineComponent({
             uuid: ""
         }) as LoginState;
 
+        // 提交登陆
         async function submitForm(formName: LoginState) {
             formName.uuid = sessionStorage.getItem("uuid") as string;
             formRef.value?.validate(async valid => {

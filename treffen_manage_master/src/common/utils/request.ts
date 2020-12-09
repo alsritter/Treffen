@@ -29,7 +29,7 @@ http.interceptors.response.use(response => {
     ElMessage.error('登录过期了，请重新登陆')
     setTimeout(()=> {
       router.push("/login")
-    }, 500)
+    }, 300)
   } else {
     return Promise.reject(error)
   }

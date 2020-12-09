@@ -12,6 +12,7 @@
                     icon="el-icon-close"
                     circle
                     class="logout"
+                    @click="logout"
                 ></el-button>
             </el-tooltip>
         </el-header>
@@ -27,11 +28,15 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import TheHomeAside from "@/components/TheHomeAside.vue";
+import logout from "@/common/logout";
 
 export default defineComponent({
     name: "Home",
     components: {
         TheHomeAside
+    },
+    setup() {
+        return { logout };
     }
 });
 </script>
@@ -44,7 +49,7 @@ export default defineComponent({
     background-color: #3e4246;
     .logout {
         position: relative;
-        left: 90%;
+        left: 95%;
         transform: translate(-50%, 20%);
     }
 }

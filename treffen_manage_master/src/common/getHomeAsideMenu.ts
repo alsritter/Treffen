@@ -159,7 +159,7 @@ export default async function getHomeAsideMenu() {
   }
   
   await request
-  .get("/api/menu/getMenu")
+  .get("/api/utils/getMenu")
   .then(res => {
     console.log(res.data.data);
     menus = res.data.data;

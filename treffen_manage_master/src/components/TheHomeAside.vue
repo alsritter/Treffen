@@ -43,7 +43,7 @@
 </template>
 <script lang="ts">
 import getHomeAsideMenu from "@/common/getHomeAsideMenu";
-import { defineComponent, ref, reactive } from "vue";
+import { defineComponent, reactive } from "vue";
 
 interface MenuItemGroup {
     groupId: number;

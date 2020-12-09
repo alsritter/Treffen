@@ -1,10 +1,12 @@
 package com.alsritter.treffen.controller;
 
-import com.alsritter.treffen.common.exception.*;
 import com.alsritter.treffen.common.SecurityConstants;
 import com.alsritter.treffen.common.ServiceErrorResultEnum;
-import com.alsritter.treffen.service.dto.LoginRequest;
+import com.alsritter.treffen.common.exception.MyWarnException;
+import com.alsritter.treffen.common.util.ResultGeneratorUtils;
+import com.alsritter.treffen.controller.vo.Result;
 import com.alsritter.treffen.service.AuthService;
+import com.alsritter.treffen.service.dto.LoginRequest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -13,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,7 +37,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @ApiOperation("登录")
-    public ResponseEntity<Void> login(@ApiParam("登陆的参数") @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<Result<String>> login(@ApiParam("登陆的参数") @RequestBody LoginRequest loginRequest) {
         String verifyCode = loginRequest.getVerify();
         String uuid = loginRequest.getUuid();
         String previousVCode = stringTemplate.opsForValue().get(SecurityConstants.IMAGE_CODE + uuid);
@@ -54,6 +55,13 @@ public class AuthController {
         String token = authService.getToken(loginRequest);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set(SecurityConstants.TOKEN_HEADER, token);
-        return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
+        return ResponseEntity.ok().headers(httpHeaders).body(ResultGeneratorUtils.genSuccessResult());
+    }
+
+    @PostMapping("/logout")
+    @ApiOperation("退出登陆")
+    public ResponseEntity<Result<String>> logout() {
+        authService.deleteTokenFromRedis();
+        return ResponseEntity.ok().body(ResultGeneratorUtils.genSuccessResult());
     }
 }

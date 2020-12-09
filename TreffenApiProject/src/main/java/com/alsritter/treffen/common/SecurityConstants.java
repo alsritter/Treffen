@@ -51,6 +51,7 @@ public final class SecurityConstants {
 
     // Swagger WHITELIST
     public static final String[] SWAGGER_WHITELIST = {
+            "/doc.html",
             "/swagger-ui.html",
             "/swagger-ui/*",
             "/swagger-resources/**",
@@ -68,7 +69,8 @@ public final class SecurityConstants {
      * 白名单，里面的请求直接放行
      */
     public static final String[] GLOBAL_WHITE_LIST = {
-      "/utils/imagecode"
+            "/utils/imagecode",
+            "/auth/logout"
     };
 
     // 过滤ALL

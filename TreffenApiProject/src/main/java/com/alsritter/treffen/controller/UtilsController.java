@@ -3,6 +3,10 @@ package com.alsritter.treffen.controller;
 import com.alsritter.treffen.common.SecurityConstants;
 import com.alsritter.treffen.common.exception.MyErrorException;
 import com.alsritter.treffen.common.ServiceErrorResultEnum;
+import com.alsritter.treffen.common.util.ResultGeneratorUtils;
+import com.alsritter.treffen.controller.vo.Menu;
+import com.alsritter.treffen.controller.vo.Result;
+import com.alsritter.treffen.service.MenusService;
 import com.google.code.kaptcha.Producer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +26,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -35,6 +41,7 @@ import java.util.concurrent.TimeUnit;
 public class UtilsController {
 
     private final Producer captchaProducer;
+    private final MenusService menusService;
 
     private final StringRedisTemplate stringTemplate;
 
@@ -68,5 +75,16 @@ public class UtilsController {
             log.warn(e.getMessage());
             throw new MyErrorException(ServiceErrorResultEnum.VERIFY_CODE_CREATE_ERROR);
         }
+    }
+
+
+    @ApiOperation("根据权限动态返回一个菜单")
+    @GetMapping("/getMenu")
+    public ResponseEntity<Result<List<Menu>>> getMenu() {
+        return ResponseEntity
+                .ok()
+                .body(
+                        ResultGeneratorUtils.genSuccessResult(menusService.getMenus())
+                );
     }
 }
