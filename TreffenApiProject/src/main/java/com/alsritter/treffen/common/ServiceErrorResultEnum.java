@@ -34,7 +34,10 @@ public enum ServiceErrorResultEnum {
     USER_NULL_ERROR(401,"无效用户！请重新登录！"),
     LOGIN_USER_LOCKED_ERROR(403,"用户已被禁止登录！"),
     OPERATE_ERROR(500,"操作失败！"),
-    REQUEST_FORBIDEN_ERROR(403,"禁止该操作！"),
+    REQUEST_FORBIDDEN_ERROR(403,"禁止该操作！"),
+    JSON_TO_LIST_ERROR(500,"json 数组转 List 错误"),
+    OBJECT_TO_JSON_ERROR(500,"Object 转 JSON 错误"),
+    JSON_TO_OBJECT_ERROR(500,"json 转 Object 错误"),
     INTERNAL_SERVER_ERROR(500, "服务器内部错误!"),
     VERIFY_CODE_CREATE_ERROR(500, "验证码生成错误"),
     SERVER_BUSY(503,"服务器正忙，请稍后再试!")

@@ -95,13 +95,13 @@ const menus = [
         path: "createMeeting"
       },
       {
-        name: "修改会议",
+        name: "完成会议",
         path: "updateMeeting"
       },
-      {
-        name: "审核会议",
-        path: "checkMeeting"
-      },
+      // {
+      //   name: "审核会议",
+      //   path: "checkMeeting"
+      // },
       {
         name: "历史会议",
         path: "historyMeeting"

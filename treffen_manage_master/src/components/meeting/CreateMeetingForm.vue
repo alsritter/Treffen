@@ -34,9 +34,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive } from "vue";
+import { defineComponent, ref, reactive, getCurrentInstance } from "vue";
 import { ElForm } from "element-plus";
 import TinymceEditor from "@/components/TinymceEditor.vue";
+import request from "@/common/utils/request";
 
 interface RecordState {
     recordType: string;
@@ -49,6 +50,8 @@ export default defineComponent({
         TinymceEditor
     },
     setup() {
+        const message = getCurrentInstance()?.appContext.config.globalProperties
+            .$message;
         const formRef = ref<InstanceType<typeof ElForm>>();
         const rules = {
             recordType: [
@@ -103,6 +106,20 @@ export default defineComponent({
 
         function submitForm() {
             console.log(state);
+            formRef.value?.validate(async valid => {
+                if (!valid) {
+                    return message.error("请填写好信息");
+                }
+                request
+                    .post("/api/meeting/createMeeting", state)
+                    .then(() => {
+                        message.success("创建成功");
+                    })
+                    .catch(error => {
+                        message.error("创建失败");
+                        console.error(error);
+                    });
+            });
         }
 
         return { resetForm, submitForm, rules, formRef, state, meetingType };

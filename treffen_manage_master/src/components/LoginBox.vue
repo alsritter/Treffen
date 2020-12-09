@@ -130,7 +130,7 @@ export default defineComponent({
             formName.uuid = sessionStorage.getItem("uuid") as string;
             formRef.value?.validate(async valid => {
                 if (!valid) {
-                    return message.error("登陆失败");
+                    return message.error("请填写好信息");
                 }
                 axios
                     .post("/api/auth/login", formName)

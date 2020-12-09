@@ -21,7 +21,7 @@ public class TbUser implements Serializable {
     private Integer userId;
 
     /**
-     * 这个是登陆的用户ID，这里就是工号
+     * 别被名字误导了，这个是登陆的用户 ID(就是工号)
      */
     private String userName;
 
@@ -33,7 +33,7 @@ public class TbUser implements Serializable {
     private Integer mgrId;
 
     /**
-     * 真实名称
+     * 这个才是真实名称
      */
     private String trueName;
 

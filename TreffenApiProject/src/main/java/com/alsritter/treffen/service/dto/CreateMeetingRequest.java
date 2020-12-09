@@ -12,7 +12,7 @@ import java.util.Date;
  * @version 1.0
  **/
 @Data
-public class Meeting {
+public class CreateMeetingRequest {
     @NotEmpty(message = "会议类型不能为空")
     @ApiModelProperty(value = "会议类型不能为空", required = true)
     private String recordType;
