@@ -7,8 +7,8 @@
             text-color="#fff"
             active-text-color="#ffd04b"
             unique-opened
+            :router="true"
             :collapse-transition="false"
-            router
         >
             <!-- 加一个  v-if="menus" 当为空时不刷新 -->
             <div v-if="menus">
@@ -28,8 +28,10 @@
                     <!-- 二级菜单 -->
                     <el-menu-item
                         v-for="subItem in item.itemList"
-                        :index="'/' + subItem.itemPath"
+                        :index="subItem.itemName"
                         :key="subItem.itemPath"
+                        :route="{ path: '/' + subItem.itemPath }"
+                        @click="handleSelect(subItem)"
                     >
                         <template #title>
                             <!-- 文本 -->
@@ -51,7 +53,7 @@ interface MenuItemGroup {
     groupIcon: string;
 }
 
-interface ItemList {
+interface Item {
     itemId: number;
     itemName: string;
     isDeleted: number;
@@ -62,11 +64,11 @@ interface ItemList {
 
 interface Menus {
     menuItemGroup: MenuItemGroup;
-    itemList: ItemList[];
+    itemList: Item[];
 }
 
 export default defineComponent({
-    setup() {
+    setup(props, { emit }) {
         const menus = reactive<Menus[]>([]);
         getHomeAsideMenu()
             .then(res => {
@@ -78,7 +80,17 @@ export default defineComponent({
                 console.error(error);
             });
 
+        function handleSelect(item: Item) {
+            emit("add-tag", item.itemName, item.itemPath);
+        }
+
+        // function handleSelect(key: string) {
+        //     // 这里发送一个事件给 Tag 页，新增了一个 Tag
+        //     // emit("add-tag", key);
+        // }
+
         return {
+            handleSelect,
             menus
         };
     }

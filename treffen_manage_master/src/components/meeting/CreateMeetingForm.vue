@@ -105,7 +105,6 @@ export default defineComponent({
         }
 
         function submitForm() {
-            console.log(state);
             formRef.value?.validate(async valid => {
                 if (!valid) {
                     return message.error("请填写好信息");

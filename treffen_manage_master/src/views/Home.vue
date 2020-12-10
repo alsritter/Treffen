@@ -17,18 +17,36 @@
             </el-tooltip>
         </el-header>
         <el-container>
-            <TheHomeAside />
+            <TheHomeAside @add-tag="addTag" />
             <el-main>
+                <el-tabs
+                    v-model="editableTabsValue"
+                    type="card"
+                    closable
+                    @tab-remove="removeTab"
+                    @tab-click="routerToUrl"
+                    ref="formRef"
+                >
+                    <el-tab-pane
+                        :key="item.name"
+                        v-for="item in editableTabs"
+                        :label="item.title"
+                        :name="item.name"
+                    >
+                    </el-tab-pane>
+                    <router-view></router-view>
+                </el-tabs>
                 <!-- 路由占位符 -->
-                <router-view></router-view>
             </el-main>
         </el-container>
     </el-container>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref, reactive } from "vue";
 import TheHomeAside from "@/components/TheHomeAside.vue";
 import logout from "@/common/logout";
+import { ElTabs } from "element-plus";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
     name: "Home",
@@ -36,7 +54,53 @@ export default defineComponent({
         TheHomeAside
     },
     setup() {
-        return { logout };
+        const formRef = ref<InstanceType<typeof ElTabs>>();
+        const router = useRouter();
+
+        const editableTabsValue = ref("2");
+
+        const editableTabs = reactive([
+            {
+                title: "Home",
+                name: "/myStat"
+            }
+        ]);
+
+        function removeTab(targetName: string) {
+            editableTabs.forEach((item, index, arr) => {
+                if (item.name === targetName) {
+                    arr.splice(index, 1);
+                }
+            });
+        }
+
+        function addTag(targetName: string, path: string) {
+            editableTabsValue.value = path;
+            for (const iterator of editableTabs) {
+                if (iterator.name === path) {
+                    router.push(path);
+                    return;
+                }
+            }
+            editableTabs.push({
+                title: targetName,
+                name: path
+            });
+        }
+
+        function routerToUrl(e: any) {
+            router.push(e.props.name);
+        }
+
+        return {
+            logout,
+            editableTabsValue,
+            editableTabs,
+            removeTab,
+            routerToUrl,
+            formRef,
+            addTag
+        };
     }
 });
 </script>

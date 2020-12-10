@@ -30,7 +30,7 @@ public final class SecurityConstants {
     public static final String ROLE_CLAIMS = "rol";
 
     /**
-     * rememberMe 为 false 的时候过期时间是1个小时
+     * rememberMe 为 false 的时候过期时间是 1 个小时
      */
     public static final long EXPIRATION = 60 * 60L;
 

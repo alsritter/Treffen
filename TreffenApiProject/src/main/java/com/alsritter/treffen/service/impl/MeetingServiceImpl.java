@@ -92,7 +92,7 @@ public class MeetingServiceImpl implements MeetingService {
             throw new MyWarnException(ServiceErrorResultEnum.NOT_FOUND);
         }
 
-        return getMeeting(tbMeeting);
+        return getMeeting(tbMeeting, false);
     }
 
 
@@ -166,13 +166,13 @@ public class MeetingServiceImpl implements MeetingService {
         List<Meeting> meetings = new ArrayList<>();
 
         tbMeetings.forEach(x -> {
-            Meeting meeting = getMeeting(x);
+            Meeting meeting = getMeeting(x, true);
             meetings.add(meeting);
         });
         return meetings;
     }
 
-    private Meeting getMeeting(TbMeeting tbMeeting) {
+    private Meeting getMeeting(TbMeeting tbMeeting, boolean isList) {
         Integer hostId = tbMeeting.getHostId();
         TbUser tbUser = userMapper.selectById(hostId);
         TbDept tbDept = deptMapper.selectById(tbUser.getDeptId());
@@ -180,11 +180,17 @@ public class MeetingServiceImpl implements MeetingService {
         Meeting meeting = new Meeting();
         meeting.setMeetingId(tbMeeting.getMeetingId());
         meeting.setRecordType(tbMeeting.getRecordType());
+        meeting.setStartTime(tbMeeting.getStartTime());
+        meeting.setEndTime(tbMeeting.getEndTime());
+
         meeting.setUserEId(tbUser.getUserName());
         meeting.setUserName(tbUser.getTrueName());
         meeting.setEmail(tbUser.getEmail());
         meeting.setJob(tbUser.getJob());
         meeting.setPhone(tbUser.getPhone());
+        if (!isList) {
+            meeting.setRecordDesc(tbMeeting.getRecordDesc());
+        }
 
         meeting.setDeptLocation(tbDept.getDeptLocation());
         meeting.setDeptName(tbDept.getDeptName());

@@ -51,7 +51,11 @@ public class AuthServiceImpl implements AuthService {
                 .collect(Collectors.toList());
 
 
-        String token = JwtTokenUtils.createToken(user.getUserName(), user.getUserId().toString(), authorities, loginRequest.getRememberMe());
+        String token = JwtTokenUtils.createToken(
+                user.getUserName(),
+                user.getUserId().toString(),
+                authorities,
+                loginRequest.getRememberMe());
         // 存到 redis 里面先
         stringRedisTemplate.opsForValue().set(user.getUserId().toString(), token);
         return token;
