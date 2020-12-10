@@ -1,14 +1,19 @@
 <template>
-    <el-aside width="200px">
+    <el-aside :width="isCollapse ? '64px' : '200px'">
+        <div class="isCollapse" @click="isCollapse = !isCollapse">
+            <div>{{ isCollapse ? "展开" : "折叠" }}</div>
+        </div>
         <!-- 侧边栏菜单区域 
         开启 router 表示以 index 作为 path 进行路由跳转-->
         <el-menu
+            class="el-menu-vertical"
             background-color="#545c64"
             text-color="#fff"
             active-text-color="#ffd04b"
             unique-opened
             :router="true"
             :collapse-transition="false"
+            :collapse="isCollapse"
         >
             <!-- 加一个  v-if="menus" 当为空时不刷新 -->
             <div v-if="menus">
@@ -19,11 +24,11 @@
                     :key="item.menuItemGroup.groupId"
                 >
                     <!-- 一级菜单的模板区域 -->
-                    <template v-slot:title>
+                    <template #title>
                         <!-- 图标 -->
                         <i :class="item.menuItemGroup.groupIcon"></i>
                         <!-- 文本 -->
-                        <span> {{ item.menuItemGroup.groupName }}</span>
+                        <span>{{ item.menuItemGroup.groupName }}</span>
                     </template>
                     <!-- 二级菜单 -->
                     <el-menu-item
@@ -45,7 +50,7 @@
 </template>
 <script lang="ts">
 import getHomeAsideMenu from "@/common/getHomeAsideMenu";
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive, ref } from "vue";
 
 interface MenuItemGroup {
     groupId: number;
@@ -70,6 +75,8 @@ interface Menus {
 export default defineComponent({
     setup(props, { emit }) {
         const menus = reactive<Menus[]>([]);
+        const isCollapse = ref(false);
+
         getHomeAsideMenu()
             .then(res => {
                 for (const iterator of res) {
@@ -84,14 +91,10 @@ export default defineComponent({
             emit("add-tag", item.itemName, item.itemPath);
         }
 
-        // function handleSelect(key: string) {
-        //     // 这里发送一个事件给 Tag 页，新增了一个 Tag
-        //     // emit("add-tag", key);
-        // }
-
         return {
             handleSelect,
-            menus
+            menus,
+            isCollapse
         };
     }
 });
@@ -101,6 +104,38 @@ export default defineComponent({
     background-color: #545c64;
     li.el-menu-item {
         background-color: #42484e !important;
+    }
+
+    .el-menu-vertical:not(.el-menu--collapse) {
+        // width: 500px;
+        // min-height: 1000px;
+    }
+
+    /*隐藏文字*/
+    .el-menu--collapse .el-submenu__title span {
+        display: none;
+    }
+    /*隐藏 > */
+    .el-menu--collapse .el-submenu__title .el-submenu__icon-arrow {
+        display: none;
+    }
+
+    .isCollapse {
+        width: 100%;
+        height: 50px;
+        color: #909399;
+        text-align: center;
+        font-weight: bold;
+        div {
+            display: block;
+            position: relative;
+            top: 50%;
+            transform: translate(0, -50%);
+        }
+    }
+    .isCollapse:hover {
+        background-color: #42484e !important;
+        cursor: pointer;
     }
 }
 </style>

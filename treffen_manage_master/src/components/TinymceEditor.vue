@@ -1,5 +1,10 @@
 <template>
-    <Editor id="tinymce" v-model="inputValue" :init="editorInit"></Editor>
+    <Editor
+        id="tinymce"
+        v-model="inputValue"
+        :init="editorInit"
+        class="editor"
+    ></Editor>
 </template>
 
 <script lang="ts">

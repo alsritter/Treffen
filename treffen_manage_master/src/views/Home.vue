@@ -31,7 +31,7 @@
                         :key="item.name"
                         v-for="item in editableTabs"
                         :label="item.title"
-                        :name="item.name"
+                        :name="item.path"
                     >
                     </el-tab-pane>
                     <router-view></router-view>
@@ -62,14 +62,19 @@ export default defineComponent({
         const editableTabs = reactive([
             {
                 title: "Home",
-                name: "/myStat"
+                path: "/myStat"
             }
         ]);
 
         function removeTab(targetName: string) {
             editableTabs.forEach((item, index, arr) => {
-                if (item.name === targetName) {
+                if (item.path === targetName) {
                     arr.splice(index, 1);
+                    // 再跳转到 List 的上一个页面上去
+                    if (editableTabs[index - 1]) {
+                        editableTabsValue.value = editableTabs[index - 1].path;
+                        router.push(editableTabs[index - 1].path);
+                    }
                 }
             });
         }
@@ -77,14 +82,14 @@ export default defineComponent({
         function addTag(targetName: string, path: string) {
             editableTabsValue.value = path;
             for (const iterator of editableTabs) {
-                if (iterator.name === path) {
+                if (iterator.path === path) {
                     router.push(path);
                     return;
                 }
             }
             editableTabs.push({
                 title: targetName,
-                name: path
+                path: path
             });
         }
 

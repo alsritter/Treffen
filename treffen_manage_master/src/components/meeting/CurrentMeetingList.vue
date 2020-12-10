@@ -20,9 +20,7 @@
                         <el-form-item label="开始时间">
                             <span>{{ props.row.startTime }}</span>
                         </el-form-item>
-                        <el-form-item label="结束时间">
-                            <span>{{ props.row.endTime }}</span>
-                        </el-form-item>
+
                         <el-form-item label="发布人邮箱">
                             <span>{{ props.row.email }}</span>
                         </el-form-item>
@@ -45,7 +43,7 @@
             </el-table-column>
             <el-table-column prop="startTime" label="开始时间">
             </el-table-column>
-            <el-table-column prop="endTime" label="结束时间"> </el-table-column>
+
             <el-table-column prop="recordType" label="会议主题">
             </el-table-column>
             <el-table-column prop="userName" label="发布人"> </el-table-column>
@@ -110,7 +108,7 @@ export default defineComponent({
 
         // 先获取 List
         request
-            .get("/api/meeting/getAllHistoryMeeting")
+            .get("/api/meeting/getAllStartMeeting")
             .then(res => {
                 for (const iterator of res.data.data) {
                     meetings.push(iterator);
@@ -160,5 +158,6 @@ export default defineComponent({
 }
 
 /deep/ .el-table__row {
+    background-color: #ddffd4 !important;
 }
 </style>

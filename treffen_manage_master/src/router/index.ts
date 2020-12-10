@@ -20,6 +20,16 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/meeting/HistoryMeeting.vue")
       },
       {
+        path: "/currentMeeting",
+        name: "CurrentMeeting",
+        component: () => import("@/views/meeting/CurrentMeeting.vue")
+      },
+      {
+        path: "/updateMeeting",
+        name: "ManageMeeting",
+        component: () => import("@/views/meeting/ManageMeeting.vue")
+      },
+      {
         path: "/:other",
         name: "Other",
         component: NotDefine

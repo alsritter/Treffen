@@ -1,6 +1,27 @@
 <template>
     <div>
-        <RecordDescPage v-model:value="dialogVisible" :message="message" />
+        <RecordDescPage
+            v-model:value="dialogVisible"
+            :message="recordDescContent"
+        />
+        <el-dialog
+            title="修改会议内容"
+            v-model="editDialogVisible"
+            width="760px"
+            center
+        >
+            <TinymceEditor v-model:value="recordDesc" />
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="editDialogVisible = false"
+                        >取 消</el-button
+                    >
+                    <el-button type="primary" @click="changeDesc()"
+                        >确 定</el-button
+                    >
+                </span>
+            </template>
+        </el-dialog>
         <el-table :data="meetings">
             <el-table-column type="expand">
                 <template #default="props">
@@ -20,9 +41,7 @@
                         <el-form-item label="开始时间">
                             <span>{{ props.row.startTime }}</span>
                         </el-form-item>
-                        <el-form-item label="结束时间">
-                            <span>{{ props.row.endTime }}</span>
-                        </el-form-item>
+
                         <el-form-item label="发布人邮箱">
                             <span>{{ props.row.email }}</span>
                         </el-form-item>
@@ -45,7 +64,7 @@
             </el-table-column>
             <el-table-column prop="startTime" label="开始时间">
             </el-table-column>
-            <el-table-column prop="endTime" label="结束时间"> </el-table-column>
+
             <el-table-column prop="recordType" label="会议主题">
             </el-table-column>
             <el-table-column prop="userName" label="发布人"> </el-table-column>
@@ -61,13 +80,27 @@
                     }}</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column fixed="right" label="查看会议内容" width="120">
+            <el-table-column fixed="right" label="操作" width="350">
                 <template #default="scope">
                     <el-button
                         size="small"
                         @click="showRow(scope.row.meetingId)"
                     >
                         查看详情
+                    </el-button>
+                    <el-button
+                        size="small"
+                        type="warning"
+                        @click="openChangeDialogVisible(scope.row.meetingId)"
+                    >
+                        修改会议内容
+                    </el-button>
+                    <el-button
+                        size="small"
+                        type="danger"
+                        @click="endMeeting(scope.row.meetingId)"
+                    >
+                        结束会议
                     </el-button>
                 </template>
             </el-table-column>
@@ -76,9 +109,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from "vue";
+import { defineComponent, reactive, ref, getCurrentInstance } from "vue";
 import request from "@/common/utils/request";
 import RecordDescPage from "@/components/meeting/RecordDescPage.vue";
+import TinymceEditor from "@/components/TinymceEditor.vue";
 
 interface Meeting {
     userName: string;
@@ -101,16 +135,22 @@ interface Filter {
 
 export default defineComponent({
     components: {
-        RecordDescPage
+        RecordDescPage,
+        TinymceEditor
     },
     setup() {
+        const message = getCurrentInstance()?.appContext.config.globalProperties
+            .$message;
         const meetings = reactive<Meeting[]>([]);
         const dialogVisible = ref(false);
-        const message = ref("");
+        const editDialogVisible = ref(false);
+        const recordDescContent = ref("");
+        const recordDesc = ref("");
+        const currentMeetingId = ref(0);
 
         // 先获取 List
         request
-            .get("/api/meeting/getAllHistoryMeeting")
+            .get("/api/meeting/getAllStartMeeting")
             .then(res => {
                 for (const iterator of res.data.data) {
                     meetings.push(iterator);
@@ -121,11 +161,10 @@ export default defineComponent({
             });
 
         function showRow(meetingId: number) {
-            console.log(meetingId);
             request
                 .get(`/api/meeting/getMeeting/${meetingId}`)
                 .then(res => {
-                    message.value = res.data.data.recordDesc;
+                    recordDescContent.value = res.data.data.recordDesc;
                     dialogVisible.value = true;
                 })
                 .catch(error => {
@@ -133,7 +172,62 @@ export default defineComponent({
                 });
         }
 
-        return { meetings, showRow, dialogVisible, message };
+        function changeDesc() {
+            console.log(currentMeetingId.value);
+            request
+                .put(`/api/meeting/updateMeeting/${currentMeetingId.value}`, {
+                    recordDesc: recordDesc.value
+                })
+                .then(() => {
+                    message.success("修改成功");
+                    editDialogVisible.value = false;
+                })
+                .catch(error => {
+                    message.error("创建失败");
+                    console.error(error);
+                    editDialogVisible.value = false;
+                });
+        }
+
+        function openChangeDialogVisible(meetingId: number) {
+            currentMeetingId.value = meetingId;
+            editDialogVisible.value = true;
+        }
+
+        function endMeeting(meetingId: number) {
+            request
+                .put(`/api/meeting/endMeeting/${meetingId}`)
+                .then(() => {
+                    message.success("会议结束");
+                    meetings.splice(0, meetings.length);
+                    request
+                        .get("/api/meeting/getAllStartMeeting")
+                        .then(res => {
+                            for (const iterator of res.data.data) {
+                                meetings.push(iterator);
+                            }
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
+                })
+                .catch(error => {
+                    message.error("操作失败");
+                    console.error(error);
+                });
+        }
+
+        return {
+            meetings,
+            endMeeting,
+            showRow,
+            dialogVisible,
+            recordDescContent,
+            recordDesc,
+            changeDesc,
+            editDialogVisible,
+            openChangeDialogVisible
+        };
     }
 });
 </script>
@@ -160,5 +254,6 @@ export default defineComponent({
 }
 
 /deep/ .el-table__row {
+    background-color: #fafcff !important;
 }
 </style>

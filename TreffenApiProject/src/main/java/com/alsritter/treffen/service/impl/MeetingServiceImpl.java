@@ -69,7 +69,7 @@ public class MeetingServiceImpl implements MeetingService {
     @Override
     public void updateMeeting(Integer meetingId, UpdateMeetingRequest recordDesc) {
         UpdateWrapper<TbMeeting> tbMeetingUpdateWrapper = new UpdateWrapper<>();
-        tbMeetingUpdateWrapper.eq("meeting_id", meetingId).set("record_desc",recordDesc);
+        tbMeetingUpdateWrapper.set("record_desc",recordDesc.getRecordDesc()).eq("meeting_id", meetingId);
         int isOk = meetingMapper.update(null,tbMeetingUpdateWrapper);
 
         if (isOk < 1) {
@@ -81,8 +81,13 @@ public class MeetingServiceImpl implements MeetingService {
     @Transactional
     public void endMeeting(Integer meetingId) {
         UpdateWrapper<TbMeeting> tbMeetingUpdateWrapper = new UpdateWrapper<>();
-        tbMeetingUpdateWrapper.eq("meeting_id", meetingId).set(END_TIME, new Date());
-        meetingMapper.update(null, tbMeetingUpdateWrapper);
+        tbMeetingUpdateWrapper.set(END_TIME, new Date()).eq("meeting_id", meetingId);
+        int isOk = meetingMapper.update(null, tbMeetingUpdateWrapper);
+        if (isOk < 1) {
+            throw new MyErrorException(ServiceErrorResultEnum.INTERNAL_SERVER_ERROR);
+        }
+        stringTemplate.delete(DataBaseConstants.ALL_START_MEETING);
+        stringTemplate.delete(DataBaseConstants.ALL_HISTORY_MEETING);
     }
 
     @Override
