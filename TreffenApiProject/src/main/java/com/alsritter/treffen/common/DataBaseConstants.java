@@ -18,4 +18,14 @@ public final class DataBaseConstants {
      * 还未结束的会议的 Key
      */
     public static final String ALL_START_MEETING = "ALL_START_MEETING";
+
+    /**
+     * 历史会议的过期时间(单位是秒)
+     */
+    public static final long ALL_HISTORY_MEETING_TIME = 60 * 10L;
+
+    /**
+     * 历史会议的 Key
+     */
+    public static final String ALL_HISTORY_MEETING = "ALL_HISTORY_MEETING";
 }

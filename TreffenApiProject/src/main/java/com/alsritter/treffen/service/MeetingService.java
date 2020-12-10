@@ -11,6 +11,8 @@ public interface MeetingService {
 
     void endMeeting(Integer meetingId);
 
+    Meeting getMeeting(Integer meetingId);
+
     List<Meeting> getAllStartMeeting();
 
     List<Meeting> getAllHistoryMeeting();

@@ -3,7 +3,6 @@ package com.alsritter.treffen.controller;
 import com.alsritter.treffen.common.util.ResultGeneratorUtils;
 import com.alsritter.treffen.controller.vo.Meeting;
 import com.alsritter.treffen.controller.vo.Result;
-import com.alsritter.treffen.entity.TbMeeting;
 import com.alsritter.treffen.service.MeetingService;
 import com.alsritter.treffen.service.dto.CreateMeetingRequest;
 import com.alsritter.treffen.service.dto.UpdateMeetingRequest;
@@ -33,18 +32,28 @@ public class MeetingController {
     private final MeetingService meetingService;
 
     @ApiOperation("取得已经完成的会议")
-    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_MANAGER','ROLE_ADMIN')")
     @GetMapping("/getAllHistoryMeeting")
     public ResponseEntity<Result<List<Meeting>>> getAllHistoryMeeting() {
-        List<Meeting> meetings =  meetingService.getAllHistoryMeeting();
+        List<Meeting> meetings = meetingService.getAllHistoryMeeting();
         return ResponseEntity.ok().body(ResultGeneratorUtils.genSuccessResult(meetings));
     }
 
+    @ApiOperation("取得一个会议")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_MANAGER','ROLE_ADMIN')")
+    @GetMapping("/getMeeting/{meetingId}")
+    public ResponseEntity<Result<Meeting>> getMeeting(
+            @ApiParam("会议的编号") @PathVariable Integer meetingId
+    ) {
+        Meeting meeting = meetingService.getMeeting(meetingId);
+        return ResponseEntity.ok().body(ResultGeneratorUtils.genSuccessResult(meeting));
+    }
+
     @ApiOperation("取得当前还未完成的会议")
-    @PreAuthorize("hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_MANAGER','ROLE_ADMIN')")
     @GetMapping("/getAllStartMeeting")
     public ResponseEntity<Result<List<Meeting>>> getAllStartMeeting() {
-        List<Meeting> meetings =  meetingService.getAllStartMeeting();
+        List<Meeting> meetings = meetingService.getAllStartMeeting();
         return ResponseEntity.ok().body(ResultGeneratorUtils.genSuccessResult(meetings));
     }
 
@@ -65,7 +74,7 @@ public class MeetingController {
             @ApiParam("会议的编号") @PathVariable Integer meetingId,
             @ApiParam("会议的内容") @RequestBody UpdateMeetingRequest recordDesc
     ) {
-        meetingService.updateMeeting(meetingId, recordDesc );
+        meetingService.updateMeeting(meetingId, recordDesc);
         return ResponseEntity.ok().body(ResultGeneratorUtils.genSuccessResult());
     }
 

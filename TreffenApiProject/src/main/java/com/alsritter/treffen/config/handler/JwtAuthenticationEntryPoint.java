@@ -37,7 +37,6 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request,
                          HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
-        // TODO: 前端拦截到 401 状态码要求用户登陆
         log.warn(authException.getMessage());
 
         ObjectMapper objectMapper = new ObjectMapper();
